@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>发货作业 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-shipping.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>发货作业</h1>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">发货单列表</div>
+            <div id="shippingOrderList" class="work-order-list"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="startShippingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="startShippingModalTitle">开始发货</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>发货单号：</label>
+                    <span id="startOrderNo">-</span>
+                </div>
+                <div class="info-row">
+                    <label>客户名称：</label>
+                    <span id="startCustomerName">-</span>
+                </div>
+                <div class="form-group">
+                    <label>选择上线口：</label>
+                    <select class="form-select" id="linePortSelect">
+                        <option value="">请选择上线口</option>
+                        <option value="上线口 1">上线口 1</option>
+                        <option value="上线口 2">上线口 2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>选择发货月台：</label>
+                    <select class="form-select" id="dockSelect">
+                        <option value="">请选择发货月台</option>
+                        <option value="发货月台 1">发货月台 1</option>
+                        <option value="发货月台 2">发货月台 2</option>
+                    </select>
+                </div>
+                <div class="help-text">确认后系统将按所选上线口和月台执行托盘出库。</div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmStartShippingBtn">确认开始</button>
+                <button class="modal-btn secondary" data-close-modal="startShippingModal">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="cancelShippingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>取消发货</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>发货单号：</label>
+                    <span id="cancelOrderNo">-</span>
+                </div>
+                <div class="form-group">
+                    <label>取消原因：</label>
+                    <input type="text" class="form-input" id="cancelReasonInput" placeholder="请输入取消原因">
+                </div>
+                <div class="help-text">仅未开始发货的发货单允许取消，取消后状态变为已取消。</div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmCancelShippingBtn">确认取消</button>
+                <button class="modal-btn secondary" data-close-modal="cancelShippingModal">返回</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-shipping-data.js"></script>
+    <script src="../scripts/pda-shipping.js"></script>
+</body>
+</html>

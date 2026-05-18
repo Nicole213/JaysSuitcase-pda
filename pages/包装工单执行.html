@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>包装工单执行 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-packaging.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="window.location.href='包装作业.html'">← 返回</button>
+            <h1>工单执行</h1>
+            <div class="port-badge" id="executionStatusBadge">待开始</div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">工单基本信息</div>
+            <div class="info-row">
+                <label>工单号：</label>
+                <span id="orderNo">-</span>
+            </div>
+            <div class="info-row">
+                <label>物料名称：</label>
+                <span id="productName">-</span>
+            </div>
+            <div class="info-row">
+                <label>物料编码：</label>
+                <span id="productCode">-</span>
+            </div>
+        </div>
+
+        <div class="info-card progress-card">
+            <div class="card-title">包装进度</div>
+            <div class="progress-overview">
+                <div class="progress-number">
+                    <strong id="packedQty">0</strong>
+                    <span>/ <span id="plannedQty">0</span></span>
+                </div>
+                <div class="progress-status" id="progressStatusText">未开始</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">物料补给操作</div>
+            <div class="request-grid">
+                <div class="request-card">
+                    <div class="request-tag tag-product">待包装成品</div>
+                    <div class="request-title">申请待包装成品出库</div>
+                    <div class="request-meta">累计申请：<span id="productOutboundCount">0</span> 托</div>
+                    <button class="primary-btn request-btn" id="requestProductBtn">申请待包装成品出库</button>
+                </div>
+                <div class="request-card">
+                    <div class="request-tag tag-material">包装纸箱</div>
+                    <div class="request-title">申请包装纸箱出库</div>
+                    <div class="request-meta">累计申请：<span id="materialOutboundCount">0</span> 托</div>
+                    <button class="primary-btn request-btn material-btn" id="requestMaterialBtn">申请包装纸箱出库</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">托盘回库</div>
+            <div class="return-card">
+                <div class="return-copy">
+                    <div class="return-title">申请托盘回库</div>
+                </div>
+                <div class="return-meta">累计回库：<span id="palletReturnCount">0</span> 托</div>
+                <button class="primary-btn" id="returnPalletBtn">申请托盘回库</button>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">操作记录</div>
+            <div id="historyTimeline" class="history-timeline"></div>
+        </div>
+
+        <div class="action-bar">
+            <button class="secondary-btn full-width" id="pauseOrderBtn">暂停工单</button>
+            <button class="primary-btn" id="continueOrderBtn" style="display: none;">继续工单</button>
+        </div>
+    </div>
+
+    <div class="modal" id="outboundModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="outboundModalTitle">申请出库</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>工单号：</label>
+                    <span id="outboundOrderNo">-</span>
+                </div>
+                <div class="form-group">
+                    <label>扫描地表码：</label>
+                    <input type="text" class="form-input" id="groundCodeInput" placeholder="请扫描地表码">
+                </div>
+                <div class="help-text" id="outboundHint">确认后将出库 1 个托盘到指定地表码处</div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmOutboundRequestBtn">确认出库</button>
+                <button class="modal-btn secondary" data-close-modal="outboundModal">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="palletReturnModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>申请托盘回库</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>扫描地表码：</label>
+                    <input type="text" class="form-input" id="returnGroundCodeInput" placeholder="请扫描地表码">
+                </div>
+                <div class="form-group">
+                    <label>扫描托盘码：</label>
+                    <input type="text" class="form-input" id="returnPalletCodeInput" placeholder="请扫描托盘码">
+                </div>
+                <div class="form-group">
+                    <label>托盘状态：</label>
+                    <select class="form-select" id="palletReturnType">
+                        <option value="empty">空托</option>
+                        <option value="partial">带余料托盘</option>
+                    </select>
+                </div>
+                <div class="form-group" id="remainingQtyGroup" style="display: none;">
+                    <label>余料数量：</label>
+                    <input type="number" class="form-input" id="remainingQtyInput" min="1" step="1" placeholder="非空托时请输入余料数量">
+                    <div class="help-text" id="remainingQtyHint">非空托回库时，请人工填写当前托盘余料数量。</div>
+                </div>
+                <label class="checkbox-label continue-supply-toggle">
+                    <input type="checkbox" id="continueSupplyCheckbox">
+                    <span>托盘回库后继续补给新材料</span>
+                </label>
+                <div class="form-group" id="continueSupplyGroup" style="display: none;">
+                    <label>补给类型：</label>
+                    <select class="form-select" id="continueSupplyType">
+                        <option value="待包装成品">待包装成品</option>
+                        <option value="包装纸箱">包装纸箱</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmPalletReturnBtn">确认入库</button>
+                <button class="modal-btn secondary" data-close-modal="palletReturnModal">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="packQtyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>登记已包装数量</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>工单号：</label>
+                    <span id="packModalOrderNo">-</span>
+                </div>
+                <div class="info-row">
+                    <label>剩余数量：</label>
+                    <span id="packModalRemainingQty">-</span>
+                </div>
+                <div class="form-group">
+                    <label>本次包装数量：</label>
+                    <input type="number" class="form-input" id="packQtyInput" min="1" value="1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmPackQtyBtn">确认登记</button>
+                <button class="modal-btn secondary" data-close-modal="packQtyModal">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="completeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>工单完成</h3>
+            </div>
+            <div class="modal-body">
+                <div class="success-msg">✓ 已包装数量达到计划包装数量，生产工单已完成。</div>
+                <div class="info-row">
+                    <label>工单号：</label>
+                    <span id="completeOrderNo">-</span>
+                </div>
+                <div class="info-row">
+                    <label>完成数量：</label>
+                    <span id="completeQty">-</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="completeBackToListBtn">返回工单列表</button>
+                <button class="modal-btn secondary" data-close-modal="completeModal">留在当前页</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-packaging-data.js"></script>
+    <script src="../scripts/pda-packaging-execution.js"></script>
+</body>
+</html>

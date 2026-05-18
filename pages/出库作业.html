@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>出库作业 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-outbound.css">
+</head>
+<body>
+    <div class="pda-container">
+        <!-- 头部 -->
+        <div class="pda-header">
+            <button class="back-btn" onclick="history.back()">← 返回</button>
+            <h1>出库作业</h1>
+            <div class="port-badge" id="portBadge">出库口 1</div>
+        </div>
+
+        <!-- 出库单信息 -->
+        <div class="info-card">
+            <div class="card-title">出库单信息</div>
+            <div id="orderList" class="order-list">
+                <!-- 出库单列表动态生成 -->
+            </div>
+        </div>
+
+        <!-- 扫描容器 -->
+        <div class="scan-card">
+            <div class="card-title">
+                <span>扫描容器编码</span>
+                <button class="icon-btn" id="clearContainerBtn">🗑️</button>
+            </div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="containerCode" placeholder="请扫描容器编码" autocomplete="off" autofocus>
+                <button class="scan-btn" id="scanContainerBtn">扫描</button>
+            </div>
+            <div class="help-text">请使用PDA扫描容器条码</div>
+        </div>
+
+        <!-- 容器信息（扫码后显示） -->
+        <div class="info-card" id="containerInfo" style="display: none;">
+            <div class="card-title">当前容器</div>
+            <div class="info-row">
+                <label>容器编码：</label>
+                <span id="currentContainer" class="text-primary">-</span>
+            </div>
+            <div class="info-row">
+                <label>容器类型：</label>
+                <span id="containerType">-</span>
+            </div>
+        </div>
+
+        <!-- 扫描物料 -->
+        <div class="scan-card" id="materialScan" style="display: none;">
+            <div class="card-title">
+                <span>扫描物料编码</span>
+                <button class="icon-btn" id="clearMaterialBtn">🗑️</button>
+            </div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="materialCode" placeholder="请扫描物料编码" autocomplete="off">
+                <button class="scan-btn" id="scanMaterialBtn">扫描</button>
+            </div>
+            <div class="help-text">扫描物料编码确认出库</div>
+        </div>
+
+        <!-- 容器物料列表 -->
+        <div class="info-card" id="materialList" style="display: none;">
+            <div class="card-title">容器物料明细</div>
+            <div id="materials" class="material-list">
+                <!-- 物料列表动态生成 -->
+            </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="action-bar" id="actionBar" style="display: none;">
+            <button class="primary-btn" id="confirmAllBtn">确认全部出库</button>
+        </div>
+    </div>
+
+    <!-- 选择入库库位弹窗 -->
+    <div class="modal" id="locationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>选择入库库位</h3>
+            </div>
+            <div class="modal-body">
+                <div class="success-msg">✓ 所有物料已出库完成！</div>
+                <div class="info-row">
+                    <label>容器编码：</label>
+                    <span id="modalContainerCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>容器类型：</label>
+                    <span id="modalContainerType">-</span>
+                </div>
+                <div class="form-group">
+                    <label>选择回库库位：</label>
+                    <select class="form-select" id="returnLocationSelect">
+                        <option value="">请选择库位</option>
+                    </select>
+                    <div class="help-text">系统已推荐适配该容器的空库位</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmReturnBtn">确认入库</button>
+                <button class="modal-btn secondary" id="cancelReturnBtn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认出库弹窗 -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认出库</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>出库单号：</label>
+                    <span id="modalOrderNo">-</span>
+                </div>
+                <div class="info-row">
+                    <label>物料编码：</label>
+                    <span id="modalMaterialCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>物料名称：</label>
+                    <span id="modalMaterialName">-</span>
+                </div>
+                <div class="info-row">
+                    <label>需出库数量：</label>
+                    <span id="modalRequiredQty">-</span>
+                </div>
+                <div class="form-group">
+                    <label>实际出库数量：</label>
+                    <input type="number" class="form-input" id="modalActualQty" min="1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmOutboundBtn">确认出库</button>
+                <button class="modal-btn secondary" id="cancelOutboundBtn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-outbound.js"></script>
+</body>
+</html>

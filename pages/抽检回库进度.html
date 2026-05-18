@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>抽检回库进度 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-inspection-work.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="goBackToInbound()">← 返回</button>
+            <h1>抽检回库进度</h1>
+            <div class="port-badge" id="inboundProgressBadge">-</div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">抽检托盘</div>
+            <div class="pallet-panel-list" id="returnPalletList"></div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-inspection-work-data.js"></script>
+    <script src="../scripts/pda-inspection-inbound-progress.js"></script>
+</body>
+</html>

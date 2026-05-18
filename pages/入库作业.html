@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>入库作业 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-inbound.css">
+</head>
+<body>
+    <div class="pda-container">
+        <!-- 头部 -->
+        <div class="pda-header">
+            <button class="back-btn" onclick="history.back()">← 返回</button>
+            <h1>入库作业</h1>
+            <div class="port-badge" id="portBadge">入库口 1</div>
+        </div>
+
+        <!-- 入库单信息 -->
+        <div class="info-card">
+            <div class="card-title">入库单信息</div>
+            <div class="info-row">
+                <label>入库单号：</label>
+                <span id="orderNo">-</span>
+            </div>
+            <div class="info-row">
+                <label>计划数量：</label>
+                <span id="plannedQty">-</span>
+            </div>
+            <div class="info-row">
+                <label>已入库：</label>
+                <span id="inboundQty" class="text-success">-</span>
+            </div>
+            <div class="info-row">
+                <label>待入库：</label>
+                <span id="pendingQty" class="text-warning">-</span>
+            </div>
+        </div>
+
+        <!-- 扫描容器 -->
+        <div class="scan-card">
+            <div class="card-title">
+                <span>扫描容器编码</span>
+                <button class="icon-btn" id="clearContainerBtn">🗑️</button>
+            </div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="containerCode" placeholder="请扫描容器编码" autocomplete="off" autofocus>
+                <button class="scan-btn" id="scanContainerBtn">扫描</button>
+            </div>
+            <div class="help-text">请使用PDA扫描容器条码</div>
+        </div>
+
+        <!-- 容器信息（扫码后显示） -->
+        <div class="info-card" id="containerInfo" style="display: none;">
+            <div class="card-title">当前容器</div>
+            <div class="info-row">
+                <label>容器编码：</label>
+                <span id="currentContainer" class="text-primary">-</span>
+            </div>
+            <div class="card-subtitle">推荐存储物料</div>
+            <div id="recommendList" class="material-list">
+                <!-- 推荐物料动态生成 -->
+            </div>
+        </div>
+
+        <!-- 扫描物料 -->
+        <div class="scan-card" id="materialScan" style="display: none;">
+            <div class="card-title">
+                <span>扫描物料编码</span>
+                <button class="icon-btn" id="clearMaterialBtn">🗑️</button>
+            </div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="materialCode" placeholder="请扫描物料编码" autocomplete="off">
+                <button class="scan-btn" id="scanMaterialBtn">扫描</button>
+            </div>
+            <div class="quantity-input-group">
+                <div class="quantity-label">入库数量：</div>
+                <div class="quantity-row">
+                    <input type="number" class="quantity-input" id="quantity" min="1" value="1">
+                    <button class="add-btn" id="addMaterialBtn">添加</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 已扫描物料列表 -->
+        <div class="info-card" id="scannedMaterials" style="display: none;">
+            <div class="card-title">已扫描物料</div>
+            <div id="materialList" class="scanned-list">
+                <!-- 已扫描物料动态生成 -->
+            </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="action-bar" id="actionBar" style="display: none;">
+            <label class="checkbox-label">
+                <input type="checkbox" id="fullPallet">
+                <span>标记满托</span>
+            </label>
+            <button class="primary-btn" id="confirmBtn">确认组盘</button>
+        </div>
+    </div>
+
+    <!-- 选择库位弹窗 -->
+    <div class="modal" id="locationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>选择入库库位</h3>
+            </div>
+            <div class="modal-body">
+                <div class="success-msg">✓ 组盘成功！</div>
+                <div class="form-group">
+                    <label>选择库位：</label>
+                    <select class="form-select" id="locationSelect">
+                        <option value="">请选择库位</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmLocationBtn">确认入库</button>
+                <button class="modal-btn secondary" id="cancelLocationBtn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-inbound.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>库存查询 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-query.css">
+</head>
+<body>
+    <div class="pda-container">
+        <!-- 头部 -->
+        <div class="pda-header">
+            <button class="back-btn" onclick="history.back()">← 返回</button>
+            <h1>库存查询</h1>
+        </div>
+
+        <!-- 查询方式选择 -->
+        <div class="tab-bar">
+            <button class="tab-btn active" data-tab="material">按物料查询</button>
+            <button class="tab-btn" data-tab="container">按容器查询</button>
+            <button class="tab-btn" data-tab="location">按库位查询</button>
+        </div>
+
+        <!-- 按物料查询 -->
+        <div class="tab-content active" id="materialTab">
+            <div class="scan-card">
+                <div class="card-title">
+                    <span>扫描物料编码</span>
+                    <button class="icon-btn" id="clearMaterialBtn">🗑️</button>
+                </div>
+                <div class="scan-input-group">
+                    <input type="text" class="scan-input" id="materialCode" placeholder="请扫描或输入物料编码" autocomplete="off" autofocus>
+                    <button class="scan-btn" id="searchMaterialBtn">查询</button>
+                </div>
+            </div>
+
+            <!-- 查询结果 -->
+            <div class="result-card" id="materialResult" style="display: none;">
+                <div class="card-title">查询结果</div>
+                <div class="info-row">
+                    <label>物料编码：</label>
+                    <span id="resultMaterialCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>物料名称：</label>
+                    <span id="resultMaterialName">-</span>
+                </div>
+                <div class="info-row">
+                    <label>总库存数量：</label>
+                    <span id="resultTotalQty" class="text-primary">-</span>
+                </div>
+                <div class="card-subtitle">库存分布</div>
+                <div id="materialLocations" class="location-list">
+                    <!-- 库存分布列表动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 按容器查询 -->
+        <div class="tab-content" id="containerTab">
+            <div class="scan-card">
+                <div class="card-title">
+                    <span>扫描容器编码</span>
+                    <button class="icon-btn" id="clearContainerBtn">🗑️</button>
+                </div>
+                <div class="scan-input-group">
+                    <input type="text" class="scan-input" id="containerCode" placeholder="请扫描或输入容器编码" autocomplete="off">
+                    <button class="scan-btn" id="searchContainerBtn">查询</button>
+                </div>
+            </div>
+
+            <!-- 查询结果 -->
+            <div class="result-card" id="containerResult" style="display: none;">
+                <div class="card-title">查询结果</div>
+                <div class="info-row">
+                    <label>容器编码：</label>
+                    <span id="resultContainerCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>容器类型：</label>
+                    <span id="resultContainerType">-</span>
+                </div>
+                <div class="info-row">
+                    <label>所在库位：</label>
+                    <span id="resultLocation">-</span>
+                </div>
+                <div class="info-row">
+                    <label>容器状态：</label>
+                    <span id="resultStatus">-</span>
+                </div>
+                <div class="card-subtitle">容器物料</div>
+                <div id="containerMaterials" class="material-list">
+                    <!-- 物料列表动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 按库位查询 -->
+        <div class="tab-content" id="locationTab">
+            <div class="scan-card">
+                <div class="card-title">输入库位编码</div>
+                <div class="location-input-vertical">
+                    <div class="location-input-item">
+                        <label>排：</label>
+                        <input type="text" class="location-input" id="locationRow" placeholder="排" maxlength="2">
+                    </div>
+                    <div class="location-input-item">
+                        <label>列：</label>
+                        <input type="text" class="location-input" id="locationCol" placeholder="列" maxlength="2">
+                    </div>
+                    <div class="location-input-item">
+                        <label>层：</label>
+                        <input type="text" class="location-input" id="locationLevel" placeholder="层" maxlength="2">
+                    </div>
+                    <div class="location-input-item">
+                        <label>深：</label>
+                        <input type="text" class="location-input" id="locationDepth" placeholder="深" maxlength="1">
+                    </div>
+                </div>
+                <button class="scan-btn full-width" id="searchLocationBtn">查询</button>
+            </div>
+
+            <!-- 查询结果 -->
+            <div class="result-card" id="locationResult" style="display: none;">
+                <div class="card-title">查询结果</div>
+                <div class="info-row">
+                    <label>库位编码：</label>
+                    <span id="resultLocationCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>库区：</label>
+                    <span id="resultArea">-</span>
+                </div>
+                <div class="info-row">
+                    <label>库位状态：</label>
+                    <span id="resultLocationStatus">-</span>
+                </div>
+                <div class="info-row">
+                    <label>容器编码：</label>
+                    <span id="resultLocationContainer">-</span>
+                </div>
+                <div class="card-subtitle">库位物料</div>
+                <div id="locationMaterials" class="material-list">
+                    <!-- 物料列表动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-query.js"></script>
+</body>
+</html>

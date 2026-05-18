@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>入库作业-待包装成品 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-awaiting-pack-inbound.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>待包装成品入库</h1>
+        </div>
+
+        <div class="scan-card">
+            <div class="card-title">
+                <span>扫描托盘码</span>
+                <button class="icon-btn" id="clearPalletBtn">🗑️</button>
+            </div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="palletCodeInput" placeholder="请扫描托盘码，如 TP-001" autocomplete="off" autofocus>
+                <button class="scan-btn" id="scanPalletBtn">扫描</button>
+            </div>
+            <div class="help-text">请先扫描待包装成品托盘码</div>
+        </div>
+
+        <div class="scan-card">
+            <div class="card-title">
+                <span>扫描地表码</span>
+                <button class="icon-btn" id="clearGroundBtn">🗑️</button>
+            </div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="groundCodeInput" placeholder="请扫描地表码，如 DB-A01-01" autocomplete="off">
+                <button class="scan-btn awaiting-pack-btn" id="scanGroundBtn">扫描</button>
+            </div>
+            <div class="help-text">扫描对应入库工位地表码</div>
+        </div>
+
+        <div class="info-card" id="currentTaskCard">
+            <div class="card-title">当前入库信息</div>
+            <div class="info-row">
+                <label>托盘码：</label>
+                <span id="currentPalletCode" class="text-primary">未扫描</span>
+            </div>
+            <div class="info-row">
+                <label>地表码：</label>
+                <span id="currentGroundCode" class="text-primary">未扫描</span>
+            </div>
+            <div class="status-strip" id="taskStatusStrip">等待扫描托盘码与地表码</div>
+        </div>
+
+        <div class="action-bar">
+            <button class="primary-btn awaiting-pack-primary" id="confirmInboundBtn">确认入库</button>
+        </div>
+
+        <div class="info-card" id="successCard" style="display: none;">
+            <div class="card-title">本次入库结果</div>
+            <div class="success-panel">
+                <div class="success-mark">✓</div>
+                <div class="success-copy">
+                    <div class="success-title">入库成功</div>
+                    <div class="success-detail" id="successDetailText">托盘已成功入库至指定地表码</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">最近操作记录</div>
+            <div id="historyList" class="history-list"></div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-awaiting-pack-inbound.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>回库明细 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-finished-inspection.css">
+    <link rel="stylesheet" href="../styles/pda-inspection-inbound.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="goBackToInspectionInbound()">← 返回</button>
+            <h1 id="detailPageTitle">回库明细</h1>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">当前托盘</div>
+            <div class="summary-banner detail-summary-banner">
+                <div>
+                    <div class="summary-pallet-code" id="detailPalletCode">-</div>
+                    <div class="summary-pallet-meta" id="detailPalletMeta">-</div>
+                </div>
+                <div class="summary-status" id="detailResultBadge">-</div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title" id="detailSectionTitle">记录明细</div>
+            <div class="sn-list compact-list" id="detailSnList"></div>
+        </div>
+
+        <div class="modal" id="unbindConfirmModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>确认解绑</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="info-row">
+                        <label>SN码：</label>
+                        <span id="pendingUnbindSnCode">-</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn primary" id="confirmUnbindBtn">确认解绑</button>
+                    <button class="modal-btn secondary" id="cancelUnbindBtn">取消</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="rebindConfirmModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>确认取消解绑</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="info-row">
+                        <label>SN码：</label>
+                        <span id="pendingRebindSnCode">-</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn primary" id="confirmRebindBtn">确认恢复</button>
+                    <button class="modal-btn secondary" id="cancelRebindBtn">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-inspection-work-data.js"></script>
+    <script src="../scripts/pda-inspection-inbound-detail.js"></script>
+</body>
+</html>

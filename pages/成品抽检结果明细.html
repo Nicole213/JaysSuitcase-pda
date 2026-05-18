@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>抽检结果明细 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-finished-inspection.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="goBackToInspection()">← 返回</button>
+            <h1 id="detailPageTitle">抽检结果明细</h1>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">当前托盘</div>
+            <div class="summary-banner detail-summary-banner">
+                <div>
+                    <div class="summary-pallet-code" id="detailPalletCode">-</div>
+                    <div class="summary-pallet-meta" id="detailPalletMeta">-</div>
+                </div>
+                <div class="summary-status" id="detailResultBadge">-</div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title" id="detailSectionTitle">抽检结果记录</div>
+            <div class="detail-tab-bar" id="detailTabBar">
+                <button class="detail-tab-btn" type="button" data-tab="all">全部</button>
+                <button class="detail-tab-btn" type="button" data-tab="pass">合格</button>
+                <button class="detail-tab-btn" type="button" data-tab="fail">不合格</button>
+            </div>
+            <div class="sn-list compact-list" id="detailSnList"></div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-inspection-work-data.js"></script>
+    <script src="../scripts/pda-finished-inspection-detail.js"></script>
+</body>
+</html>

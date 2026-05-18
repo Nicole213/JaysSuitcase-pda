@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>抽检结果录入 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-finished-inspection.css">
+    <link rel="stylesheet" href="../styles/pda-inspection-work.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="goBackToInspectionExecution()">← 返回</button>
+            <h1>抽检结果录入</h1>
+            <div class="port-badge" id="inspectionEntryBadge">待抽检</div>
+        </div>
+
+        <div class="info-card" id="inspectionContent">
+            <div class="card-title">当前抽检托盘</div>
+            <div class="summary-banner">
+                <div>
+                    <div class="summary-pallet-code" id="currentPalletCode">-</div>
+                    <div class="summary-pallet-meta" id="currentPalletMeta">-</div>
+                </div>
+                <div class="summary-status" id="currentPalletStatusText">待抽检</div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">本托抽检汇总</div>
+            <div class="pallet-info-list compact-info-list overview-plain-list" id="inspectionOverview">
+                <div class="overview-link-row" data-result-type="pass">
+                    <span class="overview-label">合格</span>
+                    <span class="clickable-group">
+                        <span class="text-success clickable-value" id="passedEntryCount">0</span>
+                        <span class="clickable-arrow">›</span>
+                    </span>
+                </div>
+                <div class="overview-link-row" data-result-type="fail">
+                    <span class="overview-label">不合格</span>
+                    <span class="clickable-group">
+                        <span class="text-danger clickable-value" id="failedEntryCount">0</span>
+                        <span class="clickable-arrow">›</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scan-card" id="scanSnCard">
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="snCodeInput" placeholder="请扫描托盘内 SN 码" autocomplete="off">
+                <button class="scan-btn" id="scanSnBtn">扫描</button>
+            </div>
+            <div class="help-text" id="demoSnHint">可试用 SN：-</div>
+        </div>
+
+        <div class="info-card" id="finalDecisionCard">
+            <div class="card-title">本托抽检结果</div>
+            <div class="final-decision-toggle" id="finalDecisionOptions">
+                <button class="decision-btn" data-result="合格">合格</button>
+                <button class="decision-btn" data-result="不合格">不合格</button>
+            </div>
+            <div class="order-summary-strip" id="draftSavedInfo">未保存草稿</div>
+        </div>
+
+        <div class="action-bar" id="inspectionActionBar">
+            <button class="secondary-btn full-width" id="saveDraftBtn">保存草稿</button>
+            <button class="primary-btn full-width" id="submitInspectionBtn">提交本托抽检</button>
+        </div>
+    </div>
+
+    <div class="modal" id="snInspectionModal">
+        <div class="modal-content inspection-modal">
+            <div class="modal-header inspection-modal-header">
+                <h3>填写 SN 抽检结果</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>SN 码：</label>
+                    <span id="modalSnCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>物料信息：</label>
+                    <span id="modalMaterialInfo">-</span>
+                </div>
+
+                <div class="form-group">
+                    <label>检验结果</label>
+                    <div class="result-toggle" id="snResultToggle">
+                        <button class="result-option" data-result="合格">合格</button>
+                        <button class="result-option" data-result="不合格">不合格</button>
+                    </div>
+                </div>
+
+                <div class="form-group hidden" id="defectReasonGroup">
+                    <label for="defectReasonSelect">不合格原因</label>
+                    <select class="form-select" id="defectReasonSelect">
+                        <option value="">请选择不合格原因</option>
+                        <option value="外观瑕疵">外观瑕疵</option>
+                        <option value="尺寸不符">尺寸不符</option>
+                        <option value="配件缺失">配件缺失</option>
+                        <option value="包装不合格">包装不合格</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+
+                <div class="form-group hidden" id="photoUploadGroup">
+                    <label>现场照片</label>
+                    <div class="photo-upload-panel">
+                        <button class="secondary-btn photo-upload-btn" id="uploadPhotoBtn" type="button">拍照并上传</button>
+                        <div class="photo-upload-tip" id="photoUploadTip">暂未上传照片</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inspectionRemarkInput">备注</label>
+                    <input type="text" class="form-input" id="inspectionRemarkInput" placeholder="可填写补充说明">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="saveSnInspectionBtn">保存结果</button>
+                <button class="modal-btn secondary" data-close-modal="snInspectionModal">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-inspection-work-data.js"></script>
+    <script src="../scripts/pda-inspection-entry.js"></script>
+</body>
+</html>

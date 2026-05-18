@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>发货单执行 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-shipping.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="goBackToShippingList()">← 返回</button>
+            <h1>执行发货单</h1>
+            <div class="port-badge" id="shippingStatusBadge">待开始</div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">发货单基本信息</div>
+            <div class="info-row">
+                <label>发货单号：</label>
+                <span id="orderNo">-</span>
+            </div>
+            <div class="info-row">
+                <label>客户名称：</label>
+                <span id="customerName">-</span>
+            </div>
+            <div class="info-row">
+                <label>上线口：</label>
+                <span id="linePort">-</span>
+            </div>
+            <div class="info-row">
+                <label>发货月台：</label>
+                <span id="dockName">-</span>
+            </div>
+        </div>
+
+        <div class="info-card progress-card">
+            <div class="card-title">发货进度</div>
+            <div class="progress-overview">
+                <div class="progress-number">
+                    <strong id="shippedQty">0</strong>
+                    <span>/ <span id="plannedQty">0</span></span>
+                </div>
+                <div class="progress-status" id="progressStatusText">未开始</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill shipping-progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">当前到位托盘</div>
+            <div id="currentPalletPanel" class="current-pallet-panel"></div>
+        </div>
+
+        <div class="scan-card" id="scanPalletCard">
+            <div class="card-title">
+                <span>扫描到位托盘码</span>
+                <button class="icon-btn" id="clearPalletCodeBtn">🗑️</button>
+            </div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="emptyPalletCodeInput" placeholder="请先扫描到位的托盘码" autocomplete="off">
+                <button class="scan-btn shipping-scan-btn" id="scanPalletBtn">识别托盘</button>
+            </div>
+            <div class="help-text pallet-scan-hint" id="scanPalletHints"></div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">操作记录</div>
+            <div id="historyTimeline" class="history-timeline"></div>
+        </div>
+
+        <div class="action-bar">
+            <button class="secondary-btn full-width" id="pauseShippingBtn">暂停发货</button>
+            <button class="primary-btn shipping-primary-btn" id="continueShippingBtn" style="display: none;">继续发货</button>
+            <button class="primary-btn shipping-complete-btn" id="manualCompleteBtn">完成发货</button>
+        </div>
+    </div>
+
+    <div class="modal" id="manualCompleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>完成发货</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>发货单号：</label>
+                    <span id="manualCompleteOrderNo">-</span>
+                </div>
+                <div class="info-row">
+                    <label>计划 / 实际：</label>
+                    <span id="manualCompleteQty">-</span>
+                </div>
+                <div class="form-group">
+                    <label>完成说明：</label>
+                    <input type="text" class="form-input" id="manualCompleteReason" placeholder="例如：客户通知按实际数量完成发货">
+                </div>
+                <div class="help-text">当实际发货数量未达到计划数量，但本单无需继续发货时，可手动完成。</div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmManualCompleteBtn">确认完成</button>
+                <button class="modal-btn secondary" data-close-modal="manualCompleteModal">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-shipping-data.js"></script>
+    <script src="../scripts/pda-shipping-execution.js"></script>
+</body>
+</html>

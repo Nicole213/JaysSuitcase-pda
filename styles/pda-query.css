@@ -1,0 +1,176 @@
+/* 库存查询样式 */
+.tab-bar {
+    display: flex;
+    background: white;
+    margin: 12px 16px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: white;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 库位输入 */
+.location-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.location-input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+}
+
+.location-input:focus {
+    border-color: #667eea;
+}
+
+.location-input-group span {
+    color: #999;
+    font-weight: 600;
+}
+
+/* 库位输入 - 竖向排列 */
+.location-input-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.location-input-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.location-input-item label {
+    min-width: 40px;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.location-input-item .location-input {
+    flex: 1;
+}
+
+/* 库存分布列表 */
+.location-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.location-item {
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.location-item .location-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.location-item .location-code {
+    font-weight: 600;
+    color: #333;
+}
+
+.location-item .location-qty {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.location-item .location-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #666;
+}
+
+/* 物料列表 */
+.material-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.material-item {
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.material-item .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.material-item .item-code {
+    font-weight: 600;
+    color: #333;
+}
+
+.material-item .item-qty {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.material-item .item-name {
+    color: #666;
+    font-size: 13px;
+}
+
+/* 空状态 */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+}
+
+.empty-state .empty-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.empty-state .empty-text {
+    font-size: 14px;
+}

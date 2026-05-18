@@ -1,0 +1,369 @@
+/* 包装作业样式 */
+
+.work-order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.order-card {
+    padding: 14px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.order-card.is-active {
+    border-color: rgba(29, 78, 216, 0.34);
+    box-shadow: 0 10px 24px rgba(29, 78, 216, 0.12);
+}
+
+.order-card.is-paused {
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.order-card.is-completed {
+    border-color: rgba(34, 197, 94, 0.24);
+    background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+}
+
+.order-card.is-cancelled {
+    border-color: rgba(148, 163, 184, 0.28);
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    opacity: 0.88;
+}
+
+.order-card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.order-no {
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.order-product {
+    margin-top: 4px;
+    font-size: 14px;
+    color: #475569;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-badge.pending {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.status-badge.in-progress {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-badge.paused {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.status-badge.completed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-badge.cancelled {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.order-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 10px;
+    margin-bottom: 8px;
+}
+
+.detail-block {
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(248, 250, 252, 0.9);
+}
+
+.detail-label {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.detail-value {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.order-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.order-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.small-btn {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.small-btn.primary {
+    background: linear-gradient(135deg, #0f766e 0%, #1d4ed8 100%);
+    color: #ffffff;
+}
+
+.small-btn.secondary {
+    background: #eef2ff;
+    color: #4338ca;
+}
+
+.small-btn.warning {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.small-btn.ghost {
+    background: #f8fafc;
+    color: #475569;
+}
+
+.small-btn:disabled,
+.request-btn:disabled,
+.primary-btn:disabled,
+.secondary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.progress-card {
+    overflow: hidden;
+}
+
+.progress-overview {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.progress-number strong {
+    font-size: 34px;
+    line-height: 1;
+    color: #0f172a;
+}
+
+.progress-number span {
+    font-size: 16px;
+    color: #64748b;
+}
+
+.progress-status {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f766e;
+}
+
+.progress-bar {
+    height: 12px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+
+.progress-fill {
+    width: 0;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #14b8a6 0%, #2563eb 100%);
+    transition: width 0.25s ease;
+}
+
+.request-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.request-card,
+.return-card {
+    padding: 14px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+}
+
+.request-tag {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tag-product {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.tag-material {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.request-title,
+.return-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.request-desc,
+.return-desc {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.request-meta,
+.return-meta {
+    margin: 10px 0 14px;
+    font-size: 13px;
+    color: #475569;
+}
+
+.material-btn {
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+}
+
+.continue-supply-toggle {
+    margin-bottom: 14px;
+}
+
+.history-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-item {
+    display: grid;
+    grid-template-columns: 12px 1fr;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.history-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 6px;
+    background: #94a3b8;
+    box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12);
+}
+
+.history-dot.outbound {
+    background: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.history-dot.return {
+    background: #f59e0b;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.12);
+}
+
+.history-dot.pack {
+    background: #0f766e;
+    box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+}
+
+.history-dot.status {
+    background: #7c3aed;
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+}
+
+.history-content {
+    padding: 12px;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.history-title-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.history-title {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.history-time {
+    font-size: 12px;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+.history-detail {
+    margin-top: 6px;
+    color: #475569;
+    font-size: 13px;
+}
+
+.history-empty {
+    padding: 18px 12px;
+    border-radius: 12px;
+    text-align: center;
+    color: #94a3b8;
+    background: #f8fafc;
+}
+
+@media (max-width: 420px) {
+    .order-details {
+        grid-template-columns: 1fr;
+    }
+
+    .order-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .order-actions {
+        width: 100%;
+    }
+
+    .small-btn {
+        flex: 1;
+    }
+}

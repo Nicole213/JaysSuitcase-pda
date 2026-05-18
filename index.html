@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PDA - 仓储管理系统</title>
+    <link rel="stylesheet" href="styles/pda-common.css">
+    <link rel="stylesheet" href="styles/pda-home.css">
+</head>
+<body>
+    <div class="pda-container">
+        <!-- 头部 -->
+        <div class="pda-header">
+            <h1>仓储管理系统</h1>
+            <div class="user-info">
+                <span id="userName">操作员</span>
+                <button class="logout-btn" id="logoutBtn">退出</button>
+            </div>
+        </div>
+
+        <!-- 功能菜单 -->
+        <div class="menu-grid">
+            <a href="pages/入库作业-待包装成品.html" class="menu-item">
+                <div class="menu-icon">📥</div>
+                <div class="menu-title">入库作业-待包装成品</div>
+            </a>
+
+            <a href="pages/包装作业.html" class="menu-item">
+                <div class="menu-icon">📦</div>
+                <div class="menu-title">包装作业</div>
+            </a>
+
+            <a href="pages/抽检作业.html" class="menu-item">
+                <div class="menu-icon">🛡️</div>
+                <div class="menu-title">抽检作业</div>
+            </a>
+
+            <a href="pages/发货作业.html" class="menu-item">
+                <div class="menu-icon">🚚</div>
+                <div class="menu-title">发货作业</div>
+            </a>
+
+            <a href="pages/盘点作业.html" class="menu-item">
+                <div class="menu-icon">📋</div>
+                <div class="menu-title">盘点作业</div>
+            </a>
+
+            <a href="pages/库存查询.html" class="menu-item">
+                <div class="menu-icon">🔍</div>
+                <div class="menu-title">库存查询</div>
+            </a>
+
+            <a href="pages/入库作业.html" class="menu-item" style="display: none;">
+                <div class="menu-icon">📦</div>
+                <div class="menu-title">入库作业</div>
+            </a>
+
+            <a href="pages/出库作业.html" class="menu-item" style="display: none;">
+                <div class="menu-icon">📤</div>
+                <div class="menu-title">出库作业</div>
+            </a>
+        </div>
+
+        <!-- 底部信息 -->
+        <div class="pda-footer">
+            <div class="footer-info">
+                <span>设备号：PDA-001</span>
+                <span id="currentTime"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/pda-packaging-data.js"></script>
+    <script src="scripts/pda-inspection-work-data.js"></script>
+    <script src="scripts/pda-home.js"></script>
+</body>
+</html>

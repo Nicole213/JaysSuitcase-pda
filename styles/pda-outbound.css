@@ -1,0 +1,119 @@
+/* 出库作业样式 */
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.order-item {
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.order-item .order-no {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.order-item .order-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #666;
+}
+
+/* 物料列表 */
+.material-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.material-card {
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.material-card.highlighted {
+    background: #fff3e0;
+    border-left-color: #ff9800;
+}
+
+.material-card .material-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.material-card .material-code {
+    font-weight: 600;
+    color: #333;
+}
+
+.material-card .material-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.material-status.pending {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.material-status.completed {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.material-card .material-name {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.material-card .material-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.material-card .material-info label {
+    color: #999;
+}
+
+.material-card .material-info span {
+    color: #333;
+    font-weight: 600;
+}
+
+.material-card .confirm-btn {
+    width: 100%;
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.material-card .confirm-btn:active {
+    opacity: 0.8;
+}
+
+.material-card .confirm-btn:disabled {
+    background: #e0e0e0;
+    color: #999;
+    cursor: not-allowed;
+}

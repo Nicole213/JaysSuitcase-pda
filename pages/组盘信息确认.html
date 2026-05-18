@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>组盘信息确认 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-finished-inspection.css">
+    <link rel="stylesheet" href="../styles/pda-inspection-inbound.css">
+    <link rel="stylesheet" href="../styles/pda-inspection-work.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="goBackToInboundExecution()">← 返回</button>
+            <h1 id="pageTitle">组盘信息确认</h1>
+            <div class="port-badge" id="confirmPageBadge">待确认回库</div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">当前托盘信息</div>
+            <div class="summary-banner inbound-summary-banner">
+                <div>
+                    <div class="summary-pallet-code" id="currentPalletCode">-</div>
+                    <div class="summary-pallet-meta" id="currentPalletMeta">-</div>
+                </div>
+                <div class="summary-status inbound-summary-status" id="currentPalletStatus">待确认回库</div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">抽检结果</div>
+            <div class="compact-info-list inspection-result-links" id="inspectionResultLinks">
+                <div class="overview-link-row inbound-link-row" data-detail-type="bound">
+                    <span class="overview-label">当前绑定SN</span>
+                    <span class="clickable-group">
+                        <span class="clickable-value" id="boundSnEntryCount">0</span>
+                        <span class="clickable-arrow">›</span>
+                    </span>
+                </div>
+                <div class="overview-link-row inbound-link-row" data-detail-type="unbound">
+                    <span class="overview-label">已解绑 SN</span>
+                    <span class="clickable-group">
+                        <span class="clickable-value" id="unboundSnEntryCount">0</span>
+                        <span class="clickable-arrow">›</span>
+                    </span>
+                </div>
+                <div class="overview-link-row inbound-link-row" data-detail-type="inspected">
+                    <span class="overview-label">已抽检</span>
+                    <span class="clickable-group">
+                        <span class="clickable-value" id="inspectedEntryCount">0</span>
+                        <span class="clickable-arrow">›</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scan-card">
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="snCodeInput" placeholder="请扫描当前托盘内 SN 码" autocomplete="off">
+                <button class="scan-btn" id="scanSnBtn">扫描</button>
+            </div>
+            <div class="help-text scan-demo-hint" id="demoInboundSnHint">可试用 SN：-</div>
+            <div class="scan-result-box pending-sn-box" id="pendingSnBox">待扫描 SN</div>
+            <button class="secondary-btn danger-soft-btn full-width" id="unbindScannedSnBtn">解绑</button>
+        </div>
+
+        <div class="action-bar">
+            <button class="primary-btn full-width" id="confirmPalletBtn">确认组盘信息</button>
+        </div>
+    </div>
+
+    <div class="modal" id="unbindConfirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认解绑</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>SN码：</label>
+                    <span id="pendingUnbindSnCode">-</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmUnbindBtn">确认解绑</button>
+                <button class="modal-btn secondary" id="cancelUnbindBtn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-inspection-work-data.js"></script>
+    <script src="../scripts/pda-pallet-confirm.js"></script>
+</body>
+</html>

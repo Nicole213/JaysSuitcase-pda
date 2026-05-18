@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>执行抽检 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-finished-inspection.css">
+    <link rel="stylesheet" href="../styles/pda-inspection-work.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="goBackToInspectionList()">← 返回</button>
+            <h1>执行抽检</h1>
+            <div class="port-badge" id="inspectionPageBadge">待扫描</div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">抽检单信息</div>
+            <div class="info-row">
+                <label>抽检单号：</label>
+                <span id="inspectionOrderNo">-</span>
+            </div>
+            <div class="info-row">
+                <label>MES工单号：</label>
+                <span id="mesOrderNo">-</span>
+            </div>
+            <div class="info-row">
+                <label>物料编码：</label>
+                <span id="materialCode">-</span>
+            </div>
+            <div class="info-row">
+                <label>物料名称：</label>
+                <span id="materialName">-</span>
+            </div>
+            <div class="info-row">
+                <label>目标检验室：</label>
+                <span id="targetLab">-</span>
+            </div>
+            <div class="info-row">
+                <label>抽检进度：</label>
+                <span class="progress-link-value">
+                    <span id="inspectionOrderProgress">-</span>
+                    <button class="jump-arrow-btn" id="viewInspectionProgressBtn" type="button">›</button>
+                </span>
+            </div>
+        </div>
+
+        <div class="scan-card">
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="palletCodeInput" placeholder="请扫描当前抽检单下托盘码" autocomplete="off">
+                <button class="scan-btn" id="scanPalletBtn">扫描</button>
+            </div>
+            <div class="help-text scan-demo-hint" id="demoPalletHint">可试用托盘码：-</div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-inspection-work-data.js"></script>
+    <script src="../scripts/pda-finished-inspection.js"></script>
+</body>
+</html>
