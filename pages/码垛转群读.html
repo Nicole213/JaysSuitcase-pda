@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>人工码垛转群读 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-pallet-transfer.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>人工码垛转群读</h1>
+        </div>
+
+        <div class="scan-card transfer-scan-card">
+            <div class="card-title">扫描起点地标码</div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="startLandmarkInput" placeholder="请扫描人工码垛工位地标码" autocomplete="off" autofocus>
+            </div>
+            <div class="help-text">可试用地标码：DB-MD-A01、DB-MD-A02、DB-MD-B01、DB-MD-B02</div>
+        </div>
+
+        <div class="info-card transfer-destination-card">
+            <div class="card-title">固定终点点位</div>
+            <div class="info-row">
+                <label>终点点位：</label>
+                <span id="endPointDisplay" class="transfer-destination-value">群读位（固定）</span>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button class="primary-btn transfer-submit-btn" id="confirmTransferCallBtn">确认呼叫</button>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-pallet-transfer.js"></script>
+</body>
+</html>

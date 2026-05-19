@@ -32,9 +32,8 @@
     line-height: 1.7;
 }
 
-.awaiting-pack-btn,
 .awaiting-pack-primary {
-    background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .status-strip {

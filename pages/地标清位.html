@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>地标清位 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-location-clear.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>地标清位</h1>
+        </div>
+
+        <div class="scan-card location-clear-scan-card">
+            <div class="card-title">扫描地标码</div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="landmarkCodeInput" placeholder="请扫描需要清位的地标码" autocomplete="off" autofocus>
+            </div>
+            <div class="help-text">用于将该地标的系统状态更新为无托盘。可试用地标码：DB-A01-01、DB-A01-02、DB-B02-01、DB-C03-01</div>
+        </div>
+
+        <div class="action-bar">
+            <button class="primary-btn" id="confirmLocationClearBtn">确认清位</button>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-location-clear.js"></script>
+</body>
+</html>

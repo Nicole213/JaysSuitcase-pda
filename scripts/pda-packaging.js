@@ -33,24 +33,35 @@ function bindEvents() {
 }
 
 function renderPage() {
-    const orders = sortOrders(PackagingStorage.getOrders());
+    const orders = sortOrders(PackagingStorage.getOrders()).filter(function(order) {
+        return order.status !== 'completed' && order.status !== 'cancelled';
+    });
     const activeOrder = PackagingStorage.getCurrentActiveOrder(orders);
 
     renderOrderList(orders, activeOrder);
 }
 
 function renderOrderList(orders, activeOrder) {
-    const html = orders.map(order => {
+    if (!orders.length) {
+        document.getElementById('workOrderList').innerHTML = '<div class="empty-state-card">暂无未完成工单。</div>';
+        return;
+    }
+
+    const html = orders.map(function(order, index) {
         const statusMeta = getStatusMeta(order.status);
         const remainingQty = Math.max(order.plannedQty - order.packedQty, 0);
         const isActive = activeOrder && activeOrder.orderNo === order.orderNo;
+        const sequenceNo = String(index + 1).padStart(2, '0');
 
         return `
             <div class="order-card ${statusMeta.cardClass}${isActive ? ' is-active' : ''}">
                 <div class="order-card-head">
-                    <div>
-                        <div class="order-no">${order.orderNo}</div>
-                        <div class="order-product">${order.productName}</div>
+                    <div class="order-title-group">
+                        <div class="order-sequence-badge" aria-label="执行顺序 ${sequenceNo}">${sequenceNo}</div>
+                        <div class="order-head-main">
+                            <div class="order-no">${order.orderNo}</div>
+                            <div class="order-product">${order.productName}</div>
+                        </div>
                     </div>
                     <span class="status-badge ${statusMeta.badgeClass}">${statusMeta.label}</span>
                 </div>

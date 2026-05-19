@@ -96,10 +96,10 @@
                     <span id="outboundOrderNo">-</span>
                 </div>
                 <div class="form-group">
-                    <label>扫描地表码：</label>
-                    <input type="text" class="form-input" id="groundCodeInput" placeholder="请扫描地表码">
+                    <label>扫描地标码：</label>
+                    <input type="text" class="form-input" id="groundCodeInput" placeholder="请扫描地标码">
                 </div>
-                <div class="help-text" id="outboundHint">确认后将出库 1 个托盘到指定地表码处</div>
+                <div class="help-text" id="outboundHint">确认后将出库 1 个托盘到指定地标码处</div>
             </div>
             <div class="modal-footer">
                 <button class="modal-btn primary" id="confirmOutboundRequestBtn">确认出库</button>
@@ -115,24 +115,20 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>扫描地表码：</label>
-                    <input type="text" class="form-input" id="returnGroundCodeInput" placeholder="请扫描地表码">
-                </div>
-                <div class="form-group">
-                    <label>扫描托盘码：</label>
-                    <input type="text" class="form-input" id="returnPalletCodeInput" placeholder="请扫描托盘码">
+                    <label>扫描地标码：</label>
+                    <input type="text" class="form-input" id="returnGroundCodeInput" placeholder="请扫描地标码">
                 </div>
                 <div class="form-group">
                     <label>托盘状态：</label>
-                    <select class="form-select" id="palletReturnType">
-                        <option value="empty">空托</option>
-                        <option value="partial">带余料托盘</option>
-                    </select>
+                    <input type="text" class="form-input readonly-input" id="palletReturnTypeDisplay" readonly>
                 </div>
                 <div class="form-group" id="remainingQtyGroup" style="display: none;">
                     <label>余料数量：</label>
-                    <input type="number" class="form-input" id="remainingQtyInput" min="1" step="1" placeholder="非空托时请输入余料数量">
-                    <div class="help-text" id="remainingQtyHint">非空托回库时，请人工填写当前托盘余料数量。</div>
+                    <input type="text" class="form-input readonly-input" id="remainingQtyInput" readonly>
+                </div>
+                <div class="form-group" id="remainingSnGroup" style="display: none;">
+                    <label>余料明细：</label>
+                    <div class="readonly-sn-table" id="remainingSnList"></div>
                 </div>
                 <label class="checkbox-label continue-supply-toggle">
                     <input type="checkbox" id="continueSupplyCheckbox">

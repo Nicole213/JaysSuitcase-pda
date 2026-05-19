@@ -1,0 +1,17 @@
+/* 呼叫AGV样式 */
+
+.agv-form-card {
+    background:
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.14), transparent 38%),
+        linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border: 1px solid rgba(59, 130, 246, 0.12);
+}
+
+.agv-help-text {
+    margin-top: 6px;
+    line-height: 1.7;
+}
+
+.agv-submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}

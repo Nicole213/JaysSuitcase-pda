@@ -19,36 +19,101 @@
         </div>
 
         <!-- 功能菜单 -->
-        <div class="menu-grid">
-            <a href="pages/入库作业-待包装成品.html" class="menu-item">
-                <div class="menu-icon">📥</div>
-                <div class="menu-title">入库作业-待包装成品</div>
-            </a>
+        <div class="menu-sections">
+            <section class="menu-section production-section">
+                <div class="section-header">
+                    <div class="section-eyebrow">生产作业</div>
+                </div>
+                <div class="menu-grid">
+                    <a href="pages/入库作业-待包装成品.html" class="menu-item">
+                        <div class="menu-icon">📥</div>
+                        <div class="menu-title">待包装成品入库</div>
+                    </a>
 
-            <a href="pages/包装作业.html" class="menu-item">
-                <div class="menu-icon">📦</div>
-                <div class="menu-title">包装作业</div>
-            </a>
+                    <a href="pages/包装作业.html" class="menu-item">
+                        <div class="menu-icon">📦</div>
+                        <div class="menu-title">包装作业</div>
+                    </a>
 
-            <a href="pages/抽检作业.html" class="menu-item">
-                <div class="menu-icon">🛡️</div>
-                <div class="menu-title">抽检作业</div>
-            </a>
+                    <a href="pages/抽检作业.html" class="menu-item">
+                        <div class="menu-icon">🛡️</div>
+                        <div class="menu-title">抽检作业</div>
+                    </a>
 
-            <a href="pages/发货作业.html" class="menu-item">
-                <div class="menu-icon">🚚</div>
-                <div class="menu-title">发货作业</div>
-            </a>
+                    <a href="pages/发货作业.html" class="menu-item">
+                        <div class="menu-icon">🚚</div>
+                        <div class="menu-title">发货作业</div>
+                    </a>
+                </div>
+            </section>
 
-            <a href="pages/盘点作业.html" class="menu-item">
-                <div class="menu-icon">📋</div>
-                <div class="menu-title">盘点作业</div>
-            </a>
+            <section class="menu-section inventory-section">
+                <div class="section-header">
+                    <div class="section-eyebrow">库存管理</div>
+                </div>
+                <div class="menu-grid">
+                    <a href="pages/盘点作业.html" class="menu-item">
+                        <div class="menu-icon">📋</div>
+                        <div class="menu-title">盘点作业</div>
+                    </a>
 
-            <a href="pages/库存查询.html" class="menu-item">
-                <div class="menu-icon">🔍</div>
-                <div class="menu-title">库存查询</div>
-            </a>
+                    <a href="pages/库存查询.html" class="menu-item">
+                        <div class="menu-icon">🔍</div>
+                        <div class="menu-title">库存查询</div>
+                    </a>
+                </div>
+            </section>
+
+            <section class="menu-section dispatch-section">
+                <div class="section-header">
+                    <div class="section-eyebrow">现场调度</div>
+                </div>
+                <div class="menu-grid">
+                    <a href="pages/呼叫AGV.html" class="menu-item agv-menu-item">
+                        <div class="menu-icon agv-menu-icon" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" role="img" focusable="false">
+                                <rect x="9" y="22" width="20" height="11" rx="4" fill="#f59e0b"></rect>
+                                <path d="M17 22V15C17 13.9 17.9 13 19 13H25.5L30 20V22Z" fill="#fbbf24"></path>
+                                <rect x="19" y="15" width="5" height="6" rx="1.5" fill="#bfdbfe"></rect>
+                                <rect x="30" y="10" width="2.8" height="24" rx="1.4" fill="#475569"></rect>
+                                <rect x="34.5" y="10" width="2.8" height="24" rx="1.4" fill="#64748b"></rect>
+                                <rect x="30" y="26" width="10" height="2.8" rx="1.4" fill="#94a3b8"></rect>
+                                <rect x="34.5" y="31" width="11.5" height="2.8" rx="1.4" fill="#cbd5e1"></rect>
+                                <rect x="12" y="18" width="6" height="4" rx="1.4" fill="#334155"></rect>
+                                <circle cx="15" cy="35" r="4.8" fill="#1f2937"></circle>
+                                <circle cx="15" cy="35" r="2" fill="#94a3b8"></circle>
+                                <circle cx="30" cy="35" r="4.8" fill="#1f2937"></circle>
+                                <circle cx="30" cy="35" r="2" fill="#94a3b8"></circle>
+                            </svg>
+                        </div>
+                        <div class="menu-title">呼叫AGV</div>
+                    </a>
+
+                    <a href="pages/码垛转群读.html" class="menu-item">
+                        <div class="menu-icon">🔄</div>
+                        <div class="menu-title">码垛转群读</div>
+                    </a>
+
+                    <a href="pages/地标清位.html" class="menu-item">
+                        <div class="menu-icon location-clear-menu-icon" aria-hidden="true">
+                            <svg viewBox="0 0 48 48" role="img" focusable="false">
+                                <path d="M14 35C14 28.37 19.37 23 26 23H39V30C39 36.63 33.63 42 27 42H14V35Z" fill="#f59e0b"></path>
+                                <path d="M15 32H38.5V36.5H15Z" fill="#fbbf24"></path>
+                                <path d="M18 23L30 11.5C31.88 9.7 34.87 9.78 36.65 11.66C38.43 13.54 38.35 16.53 36.47 18.31L24.47 29.81L18 23Z" fill="#2563eb"></path>
+                                <path d="M30.8 10.7L37.2 17.1" stroke="#bfdbfe" stroke-width="2.4" stroke-linecap="round"></path>
+                                <path d="M14.5 36L10.2 40.3" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"></path>
+                                <path d="M18 35.5L13 40.5" stroke="#b45309" stroke-width="2.4" stroke-linecap="round"></path>
+                                <path d="M22 35.5L18 41" stroke="#b45309" stroke-width="2.4" stroke-linecap="round"></path>
+                                <path d="M26 35.5L23 41.2" stroke="#b45309" stroke-width="2.4" stroke-linecap="round"></path>
+                                <path d="M30 35.5L28 41" stroke="#b45309" stroke-width="2.4" stroke-linecap="round"></path>
+                                <circle cx="12" cy="15" r="5.5" fill="#ef4444"></circle>
+                                <path d="M9.3 15H14.7" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"></path>
+                            </svg>
+                        </div>
+                        <div class="menu-title">地标清位</div>
+                    </a>
+                </div>
+            </section>
 
             <a href="pages/入库作业.html" class="menu-item" style="display: none;">
                 <div class="menu-icon">📦</div>

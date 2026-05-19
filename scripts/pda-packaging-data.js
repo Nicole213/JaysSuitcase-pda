@@ -7,6 +7,10 @@
         return JSON.parse(JSON.stringify(data));
     }
 
+    function replaceDisplayCopy(value) {
+        return typeof value === 'string' ? value.replaceAll('地表', '地标') : value;
+    }
+
     function normalizeOrder(order) {
         if (typeof order.palletReturnCount !== 'number') {
             order.palletReturnCount = Number(order.emptyReturnCount) || 0;
@@ -14,6 +18,13 @@
 
         if (!Array.isArray(order.history)) {
             order.history = [];
+        } else {
+            order.history = order.history.map(function(item) {
+                return Object.assign({}, item, {
+                    title: replaceDisplayCopy(item.title),
+                    detail: replaceDisplayCopy(item.detail)
+                });
+            });
         }
 
         return order;
@@ -81,13 +92,13 @@
                         time: '2026/05/09 09:18:00',
                         kind: 'outbound',
                         title: '申请待包装成品出库',
-                        detail: '地表码 DB-A03-01，已出库 1 个待包装成品托盘。'
+                        detail: '地标码 DB-A03-01，已出库 1 个待包装成品托盘。'
                     },
                     {
                         time: '2026/05/09 09:26:00',
                         kind: 'outbound',
                         title: '申请包装纸箱出库',
-                        detail: '地表码 DB-A03-02，已出库 1 个包装纸箱托盘。'
+                        detail: '地标码 DB-A03-02，已出库 1 个包装纸箱托盘。'
                     },
                     {
                         time: '2026/05/09 09:48:00',
@@ -99,7 +110,7 @@
                         time: '2026/05/09 10:06:00',
                         kind: 'return',
                         title: '申请托盘回库',
-                        detail: '地表码 DB-A03-03，托盘码 TP-A03-009 按系统默认 20 件/托计算，已作为空托回库，本次解绑并累计已包装 20 件。'
+                        detail: '地标码 DB-A03-03，托盘码 TP-A03-009 按系统默认 20 件/托计算，已作为空托回库，本次解绑并累计已包装 20 件。'
                     }
                 ]
             },
@@ -128,13 +139,13 @@
                         time: '2026/05/09 08:18:00',
                         kind: 'outbound',
                         title: '申请待包装成品出库',
-                        detail: '地表码 DB-B03-01，已出库 1 个待包装成品托盘。'
+                        detail: '地标码 DB-B03-01，已出库 1 个待包装成品托盘。'
                     },
                     {
                         time: '2026/05/09 08:26:00',
                         kind: 'outbound',
                         title: '申请包装纸箱出库',
-                        detail: '地表码 DB-B03-02，已出库 1 个包装纸箱托盘。'
+                        detail: '地标码 DB-B03-02，已出库 1 个包装纸箱托盘。'
                     },
                     {
                         time: '2026/05/09 08:55:00',
@@ -371,7 +382,7 @@
             appendHistory(order, {
                 kind: 'outbound',
                 title: typeLabel === '待包装成品' ? '申请待包装成品出库' : '申请包装纸箱出库',
-                detail: `地表码 ${groundCode}，已出库 1 个${typeLabel}托盘。`
+                detail: `地标码 ${groundCode}，已出库 1 个${typeLabel}托盘。`
             });
 
             return { ok: true, order: clone(order) };
@@ -413,8 +424,8 @@
                 kind: 'return',
                 title: '申请托盘回库',
                 detail: isPartialReturn
-                    ? `地表码 ${groundCode}，托盘码 ${palletCode} 按系统默认 ${safePalletQty} 件/托计算，余料 ${safeRemainingQty} 件回库未解绑，本次解绑并累计已包装 ${unboundQty} 件。`
-                    : `地表码 ${groundCode}，托盘码 ${palletCode} 按系统默认 ${safePalletQty} 件/托计算，已作为空托回库，本次解绑并累计已包装 ${unboundQty} 件。`
+                    ? `地标码 ${groundCode}，托盘码 ${palletCode} 按系统默认 ${safePalletQty} 件/托计算，余料 ${safeRemainingQty} 件回库未解绑，本次解绑并累计已包装 ${unboundQty} 件。`
+                    : `地标码 ${groundCode}，托盘码 ${palletCode} 按系统默认 ${safePalletQty} 件/托计算，已作为空托回库，本次解绑并累计已包装 ${unboundQty} 件。`
             });
 
             if (continueSupply) {
@@ -427,7 +438,7 @@
                 appendHistory(order, {
                     kind: 'outbound',
                     title: '托盘回库后继续补给',
-                    detail: `已自动补给 1 个${supplyType}托盘至地表码 ${groundCode}。`
+                    detail: `已自动补给 1 个${supplyType}托盘至地标码 ${groundCode}。`
                 });
             }
 

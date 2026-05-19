@@ -1,6 +1,34 @@
 // 包装工单执行脚本
 let currentOrderNo = null;
 let currentOutboundType = '待包装成品';
+let palletReturnDemoIndex = -1;
+
+const palletReturnDemoScenarios = [
+    {
+        returnType: 'empty',
+        displayLabel: '空托',
+        supplyType: '待包装成品',
+        palletCode: 'TP-A03-021',
+        remainingQty: '',
+        remainingSnList: []
+    },
+    {
+        returnType: 'partial',
+        displayLabel: '带余料回库-包装纸箱',
+        supplyType: '包装纸箱',
+        palletCode: 'TP-A03-022',
+        remainingQty: '6',
+        remainingSnList: []
+    },
+    {
+        returnType: 'partial',
+        displayLabel: '带余料回库-待包装成品',
+        supplyType: '待包装成品',
+        palletCode: 'TP-A03-023',
+        remainingQty: '',
+        remainingSnList: ['SN-CP-20260519-001', 'SN-CP-20260519-002', 'SN-CP-20260519-003', 'SN-CP-20260519-004']
+    }
+];
 
 document.addEventListener('DOMContentLoaded', function() {
     currentOrderNo = getOrderNoFromQuery();
@@ -32,7 +60,7 @@ function bindExecutionEvents() {
     document.getElementById('confirmOutboundRequestBtn').addEventListener('click', function() {
         const groundCode = document.getElementById('groundCodeInput').value.trim();
         if (!groundCode) {
-            alert('请扫描地表码。');
+            alert('请扫描地标码。');
             return;
         }
 
@@ -44,7 +72,7 @@ function bindExecutionEvents() {
 
         closeModal('outboundModal');
         renderExecutionPage();
-        alert(`${currentOutboundType}托盘已申请出库至地表码 ${groundCode}。`);
+        alert(`${currentOutboundType}托盘已申请出库至地标码 ${groundCode}。`);
     });
 
     document.getElementById('returnPalletBtn').addEventListener('click', function() {
@@ -54,25 +82,20 @@ function bindExecutionEvents() {
             return;
         }
 
+        const scenario = getNextPalletReturnScenario();
         document.getElementById('returnGroundCodeInput').value = '';
-        document.getElementById('returnPalletCodeInput').value = '';
-        document.getElementById('palletReturnType').value = 'empty';
         document.getElementById('remainingQtyInput').value = '';
         document.getElementById('remainingQtyGroup').style.display = 'none';
+        document.getElementById('remainingSnGroup').style.display = 'none';
+        document.getElementById('remainingSnList').innerHTML = '';
         document.getElementById('continueSupplyCheckbox').checked = false;
         document.getElementById('continueSupplyGroup').style.display = 'none';
+        document.getElementById('continueSupplyType').value = scenario.supplyType;
+        renderPalletReturnScenario(scenario);
         showModal('palletReturnModal');
         setTimeout(() => {
             document.getElementById('returnGroundCodeInput').focus();
         }, 80);
-    });
-
-    document.getElementById('palletReturnType').addEventListener('change', function(event) {
-        const isPartial = event.target.value === 'partial';
-        document.getElementById('remainingQtyGroup').style.display = isPartial ? 'block' : 'none';
-        if (!isPartial) {
-            document.getElementById('remainingQtyInput').value = '';
-        }
     });
 
     document.getElementById('continueSupplyCheckbox').addEventListener('change', function(event) {
@@ -81,27 +104,27 @@ function bindExecutionEvents() {
 
     document.getElementById('confirmPalletReturnBtn').addEventListener('click', function() {
         const groundCode = document.getElementById('returnGroundCodeInput').value.trim();
-        const palletCode = document.getElementById('returnPalletCodeInput').value.trim();
-        const returnType = document.getElementById('palletReturnType').value;
-        const remainingQtyValue = document.getElementById('remainingQtyInput').value.trim();
+        const currentScenario = getCurrentPalletReturnScenario();
+        const palletCode = currentScenario.palletCode || '';
+        const returnType = currentScenario.returnType;
         const continueSupply = document.getElementById('continueSupplyCheckbox').checked;
         const supplyType = document.getElementById('continueSupplyType').value;
 
         if (!groundCode) {
-            alert('请扫描地表码。');
+            alert('请扫描地标码。');
             return;
         }
 
         if (!palletCode) {
-            alert('请扫描托盘码。');
+            alert('系统未识别到托盘码，请稍后重试。');
             return;
         }
 
         let remainingQty = null;
         if (returnType === 'partial') {
-            remainingQty = Number(remainingQtyValue);
+            remainingQty = getScenarioRemainingQty(currentScenario);
             if (!Number.isFinite(remainingQty) || remainingQty <= 0 || !Number.isInteger(remainingQty)) {
-                alert('带余料托盘回库时，请填写大于 0 的整数余料数量。');
+                alert('系统未识别到有效余料信息，请稍后重试。');
                 return;
             }
         }
@@ -118,7 +141,7 @@ function bindExecutionEvents() {
 
         if (!result.ok) {
             if (result.reason === 'invalid_remaining_qty') {
-                alert('余料数量不能大于系统默认托盘数量 20 件，请重新填写。');
+                alert('系统识别的余料数量异常，请稍后重试。');
                 return;
             }
 
@@ -278,12 +301,73 @@ function openOutboundModal(typeLabel) {
     document.getElementById('groundCodeInput').value = '';
     document.getElementById('outboundHint').textContent =
         typeLabel === '待包装成品'
-            ? '确认后将出库 1 个待包装成品托盘到指定地表码处'
-            : '确认后将出库 1 个包装纸箱托盘到指定地表码处';
+            ? '确认后将出库 1 个待包装成品托盘到指定地标码处'
+            : '确认后将出库 1 个包装纸箱托盘到指定地标码处';
     showModal('outboundModal');
     setTimeout(() => {
         document.getElementById('groundCodeInput').focus();
     }, 80);
+}
+
+function getNextPalletReturnScenario() {
+    palletReturnDemoIndex = (palletReturnDemoIndex + 1) % palletReturnDemoScenarios.length;
+    return palletReturnDemoScenarios[palletReturnDemoIndex];
+}
+
+function getCurrentPalletReturnScenario() {
+    if (palletReturnDemoIndex < 0) {
+        return palletReturnDemoScenarios[0];
+    }
+
+    return palletReturnDemoScenarios[palletReturnDemoIndex];
+}
+
+function renderPalletReturnScenario(scenario) {
+    document.getElementById('palletReturnTypeDisplay').value = scenario.displayLabel;
+
+    if (scenario.returnType !== 'partial') {
+        document.getElementById('remainingQtyInput').value = '';
+        document.getElementById('remainingQtyGroup').style.display = 'none';
+        document.getElementById('remainingSnGroup').style.display = 'none';
+        document.getElementById('remainingSnList').innerHTML = '';
+        return;
+    }
+
+    if (scenario.supplyType === '包装纸箱') {
+        document.getElementById('remainingQtyInput').value = scenario.remainingQty;
+        document.getElementById('remainingQtyGroup').style.display = 'block';
+        document.getElementById('remainingSnGroup').style.display = 'none';
+        document.getElementById('remainingSnList').innerHTML = '';
+        return;
+    }
+
+    document.getElementById('remainingQtyInput').value = '';
+    document.getElementById('remainingQtyGroup').style.display = 'none';
+    document.getElementById('remainingSnGroup').style.display = 'block';
+    document.getElementById('remainingSnList').innerHTML = buildRemainingSnTable(scenario.remainingSnList);
+}
+
+function getScenarioRemainingQty(scenario) {
+    if (scenario.supplyType === '包装纸箱') {
+        return Number(scenario.remainingQty);
+    }
+
+    return Array.isArray(scenario.remainingSnList) ? scenario.remainingSnList.length : 0;
+}
+
+function buildRemainingSnTable(snList) {
+    if (!snList.length) {
+        return '<div class="empty-inline-state">当前暂无余料sn码。</div>';
+    }
+
+    const rows = snList.map(function(sn) {
+        return `<div class="readonly-sn-row">${sn}</div>`;
+    }).join('');
+
+    return `
+        <div class="readonly-sn-head">余料sn码</div>
+        <div class="readonly-sn-body">${rows}</div>
+    `;
 }
 
 function getProgressText(status, progress) {

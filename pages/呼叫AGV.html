@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>呼叫AGV - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-agv.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>呼叫AGV</h1>
+        </div>
+
+        <div class="info-card agv-form-card">
+            <div class="card-title">AGV呼叫</div>
+
+            <div class="form-group">
+                <label>起点点位：</label>
+                <select class="form-select" id="startPointSelect">
+                    <option value="">请选择起点点位</option>
+                    <option value="A01 点位">A01 点位</option>
+                    <option value="A02 点位">A02 点位</option>
+                    <option value="A03 点位">A03 点位</option>
+                    <option value="B01 点位">B01 点位</option>
+                    <option value="B02 点位">B02 点位</option>
+                    <option value="B03 点位">B03 点位</option>
+                    <option value="包装工位 1">包装工位 1</option>
+                    <option value="包装工位 2">包装工位 2</option>
+                    <option value="发货暂存区">发货暂存区</option>
+                    <option value="空托回收区">空托回收区</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>终点点位：</label>
+                <select class="form-select" id="endPointSelect">
+                    <option value="">请选择终点点位</option>
+                    <option value="A01 点位">A01 点位</option>
+                    <option value="A02 点位">A02 点位</option>
+                    <option value="A03 点位">A03 点位</option>
+                    <option value="B01 点位">B01 点位</option>
+                    <option value="B02 点位">B02 点位</option>
+                    <option value="B03 点位">B03 点位</option>
+                    <option value="包装工位 1">包装工位 1</option>
+                    <option value="包装工位 2">包装工位 2</option>
+                    <option value="发货暂存区">发货暂存区</option>
+                    <option value="空托回收区">空托回收区</option>
+                </select>
+            </div>
+
+            <div class="help-text agv-help-text">确认后系统将根据起点点位与终点点位发起 AGV 呼叫。</div>
+        </div>
+
+        <div class="action-bar">
+            <button class="primary-btn agv-submit-btn" id="confirmAgvCallBtn">确认呼叫</button>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-agv-call.js"></script>
+</body>
+</html>

@@ -20,21 +20,68 @@
 }
 
 /* 功能菜单 */
+.menu-sections {
+    padding: 10px 10px 76px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-section {
+    --section-accent: #667eea;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.96) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 14px;
+    padding: 10px;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+}
+
+.production-section {
+    --section-accent: #2563eb;
+}
+
+.inventory-section {
+    --section-accent: #0f766e;
+}
+
+.dispatch-section {
+    --section-accent: #b45309;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 2px 2px 0;
+}
+
+.section-eyebrow {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--section-accent);
+    line-height: 1.2;
+}
+
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    padding: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
 }
 
 .menu-item {
     background: white;
-    padding: 24px 16px;
+    min-height: 86px;
+    padding: 12px 8px 10px;
     border-radius: 12px;
     text-align: center;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(226, 232, 240, 0.9);
 }
 
 .menu-item:active {
@@ -43,14 +90,38 @@
 }
 
 .menu-icon {
-    font-size: 48px;
-    margin-bottom: 12px;
+    font-size: 32px;
+    margin-bottom: 6px;
+}
+
+.agv-menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.agv-menu-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.location-clear-menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.location-clear-menu-icon svg {
+    width: 34px;
+    height: 34px;
 }
 
 .menu-title {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     color: #333;
+    line-height: 1.25;
+    word-break: break-word;
 }
 
 /* 底部信息 */
