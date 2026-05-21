@@ -1,7 +1,7 @@
 (function createInspectionWorkStorage() {
     const STORAGE_KEY = 'pdaInspectionWorkDemoState';
     const VERSION_KEY = 'pdaInspectionWorkDemoStateVersion';
-    const STORAGE_VERSION = '2026-05-15-inspection-order-v3';
+    const STORAGE_VERSION = '2026-05-21-inspection-order-v6';
     const TARGET_LAB_MAP = {
         '成品检验室A': '检验室1',
         '成品检验室B': '检验室2',
@@ -53,6 +53,27 @@
         };
     }
 
+    function createRelatedPallet(palletCode, materialCode, materialName, channelCode, locationCode) {
+        return {
+            palletCode,
+            materialCode: materialCode || '',
+            materialName: materialName || '',
+            channelCode: channelCode || '',
+            locationCode: locationCode || ''
+        };
+    }
+
+    function createOnsiteDemoPallet(palletCode, location, serialBase, status) {
+        return createPallet(palletCode, 11, status, '', [
+            createSn(`SN-XC${serialBase}-01`, '云雾灰', location, status === '检验中' ? '合格' : ''),
+            createSn(`SN-XC${serialBase}-02`, '云雾灰', location, status === '检验中' ? '合格' : ''),
+            createSn(`SN-XC${serialBase}-03`, '星岩黑', location),
+            createSn(`SN-XC${serialBase}-04`, '星岩黑', location)
+        ], status === '检验中'
+            ? { draftSavedAt: '2026/05/21 10:18:12' }
+            : {});
+    }
+
     function getDefaultState() {
         const order1Pallet1 = createPallet('TP-QC-101', 12, '待检验', '', [
             createSn('SN-QC101-01', '黑色', 'A区-01'),
@@ -70,7 +91,7 @@
             createSn('SN-QC102-05', '灰色', 'A区-02')
         ]);
 
-        const order2Pallet1 = createPallet('TP-QC-201', 15, '待确认回库', '合格', [
+        const order2Pallet1 = createPallet('TP-QC-201', 15, '已完成', '合格', [
             createSn('SN-QC201-01', '曜石黑', 'B区-01', '合格', '', false, '外观正常'),
             createSn('SN-QC201-02', '曜石黑', 'B区-01', '合格'),
             createSn('SN-QC201-03', '深海蓝', 'B区-01', '合格'),
@@ -93,14 +114,14 @@
             createSn('SN-QC203-04', '曜石黑', 'B区-03')
         ]);
 
-        const order3Pallet1 = createPallet('TP-QC-301', 9, '待确认回库', '合格', [
+        const order3Pallet1 = createPallet('TP-QC-301', 9, '已完成', '合格', [
             createSn('SN-QC301-01', '流沙金', 'C区-01', '合格'),
             createSn('SN-QC301-02', '流沙金', 'C区-01', '合格'),
             createSn('SN-QC301-03', '深空灰', 'C区-01', '合格')
         ], {
             submittedAt: '2026/05/13 17:05:20'
         });
-        const order3Pallet2 = createPallet('TP-QC-302', 9, '待确认回库', '不合格', [
+        const order3Pallet2 = createPallet('TP-QC-302', 9, '已完成', '不合格', [
             createSn('SN-QC302-01', '流沙金', 'C区-02', '不合格', '包装不合格', true, '内衬挤压'),
             createSn('SN-QC302-02', '流沙金', 'C区-02', '合格'),
             createSn('SN-QC302-03', '深空灰', 'C区-02', '合格')
@@ -108,7 +129,7 @@
             submittedAt: '2026/05/13 17:11:42'
         });
 
-        const order4Pallet1 = createPallet('TP-QC-401', 8, '已确认回库', '合格', [
+        const order4Pallet1 = createPallet('TP-QC-401', 8, '已完成', '合格', [
             createSn('SN-QC401-01', '香槟金', 'D区-01', '合格'),
             createSn('SN-QC401-02', '香槟金', 'D区-01', '合格', '', false, '', true),
             createSn('SN-QC401-03', '曜夜蓝', 'D区-01', '合格')
@@ -119,7 +140,7 @@
         order4Pallet1.sns[1].unboundAt = '2026/05/13 08:36:18';
         order4Pallet1.sns[1].unboundSource = 'scan';
 
-        const order4Pallet2 = createPallet('TP-QC-402', 8, '已确认回库', '合格', [
+        const order4Pallet2 = createPallet('TP-QC-402', 8, '已完成', '合格', [
             createSn('SN-QC402-01', '香槟金', 'D区-02', '合格'),
             createSn('SN-QC402-02', '曜夜蓝', 'D区-02', '合格'),
             createSn('SN-QC402-03', '曜夜蓝', 'D区-02', '合格')
@@ -128,50 +149,115 @@
             returnConfirmedAt: '2026/05/13 09:08:55'
         });
 
+        const order5RelatedPallets = [
+            createRelatedPallet('TP-XC-501', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-01', 'L01-01-01'),
+            createRelatedPallet('TP-XC-502', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-01', 'L01-01-02'),
+            createRelatedPallet('TP-XC-503', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-01', 'L01-01-03'),
+            createRelatedPallet('TP-XC-504', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-02', 'L01-02-01'),
+            createRelatedPallet('TP-XC-505', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-02', 'L01-02-02'),
+            createRelatedPallet('TP-XC-506', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-02', 'L01-02-03'),
+            createRelatedPallet('TP-XC-507', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-03', 'L02-01-01'),
+            createRelatedPallet('TP-XC-508', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-03', 'L02-01-02'),
+            createRelatedPallet('TP-XC-509', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-04', 'L02-02-01'),
+            createRelatedPallet('TP-XC-510', 'FG-URBAN-26', '26寸都市拉杆箱', 'CH-04', 'L02-02-02')
+        ];
+        const order5Pallets = order5RelatedPallets.map(function(item, index) {
+            return createOnsiteDemoPallet(
+                item.palletCode,
+                `现场区-${String(index + 1).padStart(2, '0')}`,
+                501 + index,
+                index === 0 ? '检验中' : '待检验'
+            );
+        });
+
         return {
             orders: [
                 {
                     orderNo: 'CJ20260514001',
-                    mesOrderNo: 'MES-WO-20260514-001',
+                    mesOrderNo: 'WO-20260514-001',
                     materialCode: 'FG-TRAVEL-20',
                     materialName: '20寸登机箱',
                     targetLab: '检验室1',
+                    inspectionType: '检验室抽检',
                     returnConfirmed: false,
                     returnConfirmedAt: '',
                     pallets: [order1Pallet1, order1Pallet2]
                 },
                 {
                     orderNo: 'CJ20260514002',
-                    mesOrderNo: 'MES-WO-20260514-002',
+                    mesOrderNo: 'WO-20260514-002',
                     materialCode: 'FG-BUSINESS-24',
                     materialName: '24寸商务拉杆箱',
                     targetLab: '检验室2',
+                    inspectionType: '检验室抽检',
                     returnConfirmed: false,
                     returnConfirmedAt: '',
                     pallets: [order2Pallet1, order2Pallet2, order2Pallet3]
                 },
                 {
                     orderNo: 'CJ20260513005',
-                    mesOrderNo: 'MES-WO-20260513-011',
+                    mesOrderNo: 'WO-20260513-011',
                     materialCode: 'FG-CITY-28',
                     materialName: '28寸城市拉杆箱',
                     targetLab: '检验室3',
+                    inspectionType: '检验室抽检',
                     returnConfirmed: false,
                     returnConfirmedAt: '',
                     pallets: [order3Pallet1, order3Pallet2]
                 },
                 {
                     orderNo: 'CJ20260512003',
-                    mesOrderNo: 'MES-WO-20260512-006',
+                    mesOrderNo: 'WO-20260512-006',
                     materialCode: 'FG-LITE-24',
                     materialName: '24寸轻量拉杆箱',
                     targetLab: '检验室1',
-                    returnConfirmed: true,
-                    returnConfirmedAt: '2026/05/13 09:16:20',
+                    inspectionType: '检验室抽检',
+                    returnConfirmed: false,
+                    returnConfirmedAt: '',
                     pallets: [order4Pallet1, order4Pallet2]
+                },
+                {
+                    orderNo: 'XC20260521001',
+                    mesOrderNo: 'WO-20260521-021',
+                    materialCode: 'FG-URBAN-26',
+                    materialName: '26寸都市拉杆箱',
+                    targetLab: '',
+                    inspectionType: '现场抽检',
+                    returnConfirmed: false,
+                    returnConfirmedAt: '',
+                    relatedPallets: order5RelatedPallets,
+                    pallets: order5Pallets
                 }
             ]
         };
+    }
+
+    function normalizeInspectionType(type) {
+        return type === '现场抽检' ? '现场抽检' : '检验室抽检';
+    }
+
+    function normalizeRelatedPallets(items) {
+        return (Array.isArray(items) ? items : []).map(function(item) {
+            return {
+                palletCode: item && item.palletCode ? item.palletCode : '',
+                materialCode: item && item.materialCode ? item.materialCode : '',
+                materialName: item && item.materialName ? item.materialName : '',
+                channelCode: item && item.channelCode ? item.channelCode : '',
+                locationCode: item && item.locationCode ? item.locationCode : ''
+            };
+        });
+    }
+
+    function normalizePalletStatus(status) {
+        if (status === '待确认回库' || status === '已确认回库') {
+            return '已完成';
+        }
+
+        if (status === '待检验' || status === '检验中' || status === '已完成') {
+            return status;
+        }
+
+        return '待检验';
     }
 
     function loadState() {
@@ -196,6 +282,10 @@
     }
 
     function getNormalizedTargetLab(order, index) {
+        if (normalizeInspectionType(order.inspectionType) === '现场抽检') {
+            return '';
+        }
+
         const normalized = TARGET_LAB_MAP[order.targetLab];
         if (normalized) {
             return normalized;
@@ -216,26 +306,23 @@
         safeState.orders = safeState.orders.map(function(order, index) {
             return {
                 ...order,
+                returnConfirmed: false,
+                returnConfirmedAt: '',
+                inspectionType: normalizeInspectionType(order.inspectionType),
                 targetLab: getNormalizedTargetLab(order, index),
+                relatedPallets: normalizeRelatedPallets(order.relatedPallets),
                 pallets: (Array.isArray(order.pallets) ? order.pallets : []).map(function(pallet) {
-                    const isReturned = pallet.status === '已确认回库';
+                    const normalizedStatus = normalizePalletStatus(pallet.status);
+                    const isCompleted = normalizedStatus === '已完成';
                     return {
-                        groupInfoConfirmed: isReturned,
-                        groupInfoConfirmedAt: isReturned ? (pallet.returnConfirmedAt || order.returnConfirmedAt || '') : '',
-                        ...pallet
+                        ...pallet,
+                        status: normalizedStatus,
+                        groupInfoConfirmed: isCompleted ? true : Boolean(pallet.groupInfoConfirmed),
+                        groupInfoConfirmedAt: isCompleted
+                            ? (pallet.groupInfoConfirmedAt || pallet.returnConfirmedAt || order.returnConfirmedAt || '')
+                            : (pallet.groupInfoConfirmedAt || ''),
+                        returnConfirmedAt: isCompleted ? (pallet.returnConfirmedAt || order.returnConfirmedAt || '') : ''
                     };
-                }).map(function(pallet) {
-                    if (!order.returnConfirmed && pallet.status === '已确认回库') {
-                        return {
-                            ...pallet,
-                            status: '待确认回库',
-                            groupInfoConfirmed: true,
-                            groupInfoConfirmedAt: pallet.groupInfoConfirmedAt || pallet.returnConfirmedAt || '',
-                            returnConfirmedAt: ''
-                        };
-                    }
-
-                    return pallet;
                 })
             };
         });
@@ -262,16 +349,16 @@
     }
 
     function deriveOrderStatus(order) {
-        if (order.returnConfirmed) {
-            return '已确认回库';
+        const palletStatuses = (order.pallets || []).map(item => item.status);
+        if (!palletStatuses.length) {
+            return '待检验';
         }
 
-        const palletStatuses = (order.pallets || []).map(item => item.status);
         const hasPending = palletStatuses.some(item => item === '待检验');
         const hasInspecting = palletStatuses.some(item => item === '检验中');
-        const hasReturning = palletStatuses.some(item => item === '待确认回库' || item === '已确认回库');
+        const hasCompleted = palletStatuses.some(item => item === '已完成');
 
-        if (!hasInspecting && !hasReturning && hasPending) {
+        if (hasPending && !hasInspecting && !hasCompleted) {
             return '待检验';
         }
 
@@ -279,7 +366,7 @@
             return '检验中';
         }
 
-        return '待确认回库';
+        return '已完成';
     }
 
     function hydratePallet(pallet) {
@@ -312,10 +399,13 @@
 
     function hydrateOrder(order) {
         const cloned = clone(order);
+        cloned.inspectionType = normalizeInspectionType(cloned.inspectionType);
+        cloned.relatedPallets = normalizeRelatedPallets(cloned.relatedPallets);
         cloned.pallets = (cloned.pallets || []).map(hydratePallet);
         cloned.samplePalletCount = cloned.pallets.length;
-        cloned.submittedPalletCount = cloned.pallets.filter(item => item.status === '待确认回库' || item.status === '已确认回库').length;
-        cloned.returnedPalletCount = cloned.pallets.filter(item => item.status === '已确认回库').length;
+        cloned.submittedPalletCount = cloned.pallets.filter(item => item.status === '已完成').length;
+        cloned.returnedPalletCount = cloned.pallets.filter(item => item.status === '已完成').length;
+        cloned.relatedPalletCount = cloned.relatedPallets.length;
         cloned.failedSnQty = cloned.pallets.reduce((total, item) => total + item.failedQty, 0);
         cloned.inspectedSnQty = cloned.pallets.reduce((total, item) => total + item.inspectedQty, 0);
         cloned.status = deriveOrderStatus(cloned);
@@ -364,7 +454,7 @@
                 return { ok: false, reason: 'pallet_not_found' };
             }
 
-            if (pallet.status === '待确认回库' || pallet.status === '已确认回库') {
+            if (pallet.status === '已完成') {
                 return { ok: false, reason: 'pallet_locked' };
             }
 
@@ -394,7 +484,7 @@
                 return { ok: false, reason: 'pallet_not_found' };
             }
 
-            if (pallet.status === '待确认回库' || pallet.status === '已确认回库') {
+            if (pallet.status === '已完成') {
                 return { ok: false, reason: 'pallet_locked' };
             }
 
@@ -416,7 +506,7 @@
                 return { ok: false, reason: 'pallet_not_found' };
             }
 
-            if (pallet.status === '待确认回库' || pallet.status === '已确认回库') {
+            if (pallet.status === '已完成') {
                 return { ok: false, reason: 'pallet_locked' };
             }
 
@@ -438,7 +528,7 @@
                 return { ok: false, reason: 'pallet_not_found' };
             }
 
-            if (pallet.status === '已确认回库') {
+            if (pallet.status === '已完成') {
                 return { ok: false, reason: 'pallet_locked' };
             }
 
@@ -446,8 +536,11 @@
                 return { ok: false, reason: 'missing_final_result' };
             }
 
-            pallet.status = '待确认回库';
+            pallet.status = '已完成';
             pallet.submittedAt = nowLabel();
+            pallet.groupInfoConfirmed = true;
+            pallet.groupInfoConfirmedAt = pallet.submittedAt;
+            pallet.returnConfirmedAt = '';
 
             const order = hydrateOrder(getMutableOrder(state, orderNo));
             return {
@@ -540,7 +633,7 @@
                 return { ok: false, reason: 'pallet_not_found' };
             }
 
-            if (order.returnConfirmed || pallet.status === '已确认回库') {
+            if (pallet.status === '已完成') {
                 return { ok: false, reason: 'pallet_locked' };
             }
 
@@ -568,7 +661,7 @@
                 return { ok: false, reason: 'pallet_not_found' };
             }
 
-            if (pallet.status !== '待确认回库') {
+            if (pallet.status !== '已完成') {
                 return { ok: false, reason: 'invalid_pallet_status' };
             }
 
@@ -590,22 +683,18 @@
                 return { ok: false, reason: 'order_not_found' };
             }
 
-            const hasUnconfirmed = (order.pallets || []).some(function(item) {
-                return item.status !== '待确认回库' || !item.groupInfoConfirmed;
+            const hasIncomplete = (order.pallets || []).some(function(item) {
+                return item.status !== '已完成';
             });
-            if (hasUnconfirmed) {
+            if (hasIncomplete) {
                 return { ok: false, reason: 'pallets_unconfirmed' };
             }
 
-            order.returnConfirmed = true;
-            order.returnConfirmedAt = nowLabel();
+            order.returnConfirmed = false;
+            order.returnConfirmedAt = '';
             (order.pallets || []).forEach(function(pallet) {
-                pallet.status = '已确认回库';
-                pallet.returnConfirmedAt = order.returnConfirmedAt;
-                pallet.groupInfoConfirmed = true;
-                if (!pallet.groupInfoConfirmedAt) {
-                    pallet.groupInfoConfirmedAt = order.returnConfirmedAt;
-                }
+                pallet.status = '已完成';
+                pallet.returnConfirmedAt = '';
             });
 
             return {

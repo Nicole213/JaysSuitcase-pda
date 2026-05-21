@@ -16,14 +16,15 @@
             <div class="port-badge" id="inspectionPageBadge">待扫描</div>
         </div>
 
-        <div class="info-card">
+        <div class="info-card inspection-order-info-card">
             <div class="card-title">抽检单信息</div>
+            <div class="inspection-page-type-badge" id="inspectionTypeBadge">-</div>
             <div class="info-row">
                 <label>抽检单号：</label>
                 <span id="inspectionOrderNo">-</span>
             </div>
             <div class="info-row">
-                <label>MES工单号：</label>
+                <label>关联订单号：</label>
                 <span id="mesOrderNo">-</span>
             </div>
             <div class="info-row">
@@ -34,15 +35,29 @@
                 <label>物料名称：</label>
                 <span id="materialName">-</span>
             </div>
-            <div class="info-row">
+            <div class="info-row" id="targetLabRow">
                 <label>目标检验室：</label>
                 <span id="targetLab">-</span>
             </div>
-            <div class="info-row">
+            <div class="info-row" id="inspectionProgressRow">
                 <label>抽检进度：</label>
                 <span class="progress-link-value">
                     <span id="inspectionOrderProgress">-</span>
                     <button class="jump-arrow-btn" id="viewInspectionProgressBtn" type="button">›</button>
+                </span>
+            </div>
+            <div class="info-row hidden" id="relatedPalletRow">
+                <label>关联托盘信息：</label>
+                <span class="progress-link-value">
+                    <span id="relatedPalletSummary">-</span>
+                    <button class="jump-arrow-btn" id="viewRelatedPalletsBtn" type="button">›</button>
+                </span>
+            </div>
+            <div class="info-row hidden" id="inspectedPalletRow">
+                <label>已抽检：</label>
+                <span class="progress-link-value">
+                    <span id="inspectedPalletSummary">-</span>
+                    <button class="jump-arrow-btn" id="viewInspectedPalletsBtn" type="button">›</button>
                 </span>
             </div>
         </div>
@@ -50,7 +65,6 @@
         <div class="scan-card">
             <div class="scan-input-group">
                 <input type="text" class="scan-input" id="palletCodeInput" placeholder="请扫描当前抽检单下托盘码" autocomplete="off">
-                <button class="scan-btn" id="scanPalletBtn">扫描</button>
             </div>
             <div class="help-text scan-demo-hint" id="demoPalletHint">可试用托盘码：-</div>
         </div>

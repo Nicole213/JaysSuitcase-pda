@@ -3,6 +3,7 @@ let currentInspectionPallet = null;
 let currentEditingSnCode = '';
 let pendingSnResult = '';
 let pendingPhotoUploaded = false;
+let snAutoTimer = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     if (!window.InspectionWorkStorage) {
@@ -39,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function bindInspectionEntryEvents() {
-    document.getElementById('scanSnBtn').addEventListener('click', handleSnScan);
+    const snCodeInput = document.getElementById('snCodeInput');
+
     document.getElementById('submitInspectionBtn').addEventListener('click', submitInspection);
     document.getElementById('saveDraftBtn').addEventListener('click', saveCurrentDraft);
     document.getElementById('uploadPhotoBtn').addEventListener('click', mockUploadPhoto);
@@ -82,10 +84,24 @@ function bindInspectionEntryEvents() {
         });
     });
 
-    document.getElementById('snCodeInput').addEventListener('keypress', function(event) {
+    snCodeInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
             handleSnScan();
         }
+    });
+
+    snCodeInput.addEventListener('input', function() {
+        clearTimeout(snAutoTimer);
+        const snCode = snCodeInput.value.trim().toUpperCase();
+        const snItem = currentInspectionPallet.sns.find(function(item) {
+            return item.snCode === snCode;
+        });
+
+        if (!snItem) {
+            return;
+        }
+
+        snAutoTimer = setTimeout(handleSnScan, 160);
     });
 }
 
@@ -108,7 +124,7 @@ function renderInspectionEntryPage() {
 function handleSnScan() {
     const snCode = document.getElementById('snCodeInput').value.trim().toUpperCase();
     if (!snCode) {
-        alert('请先扫描 SN 码。');
+        alert('请输入 SN 码。');
         return;
     }
 
@@ -117,7 +133,7 @@ function handleSnScan() {
     });
 
     if (!snItem) {
-        alert('该 SN 不在当前托盘内，请重新扫描。');
+        alert('该 SN 不在当前托盘内，请重新输入。');
         return;
     }
 
@@ -205,6 +221,7 @@ function submitInspection() {
         return;
     }
 
+    refreshEntryState();
     alert(`托盘 ${currentInspectionPallet.palletCode} 抽检结果已提交。`);
     goBackAfterEntryComplete();
 }

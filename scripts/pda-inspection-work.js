@@ -17,18 +17,19 @@ function bindInspectionOrderListEvents() {
 
         const orderNo = target.dataset.orderNo;
         const action = target.dataset.action;
+        const order = window.InspectionWorkStorage.getOrder(orderNo);
 
         if (action === 'inspect') {
             window.location.href = `成品抽检.html?orderNo=${encodeURIComponent(orderNo)}`;
             return;
         }
 
-        if (action === 'return') {
-            window.location.href = `抽检入库.html?orderNo=${encodeURIComponent(orderNo)}`;
+        if (order && order.inspectionType === '现场抽检') {
+            window.location.href = `已抽检托盘.html?orderNo=${encodeURIComponent(orderNo)}&source=list`;
             return;
         }
 
-        window.location.href = `抽检入库.html?orderNo=${encodeURIComponent(orderNo)}&mode=view`;
+        window.location.href = `抽检进度.html?orderNo=${encodeURIComponent(orderNo)}`;
     });
 }
 
@@ -40,24 +41,24 @@ function renderInspectionOrderList() {
 
 function renderInspectionOrderCard(order) {
     const statusMeta = getInspectionStatusMeta(order.status);
-
-    return `
-        <div class="inspection-order-card ${statusMeta.cardClass}">
-            <div class="inspection-order-head">
-                <div>
-                    <div class="inspection-order-no">${order.orderNo}</div>
-                    <div class="inspection-order-sub">${order.materialName}</div>
-                </div>
-                <span class="inspection-status-badge ${statusMeta.badgeClass}">${order.status}</span>
-            </div>
-            <div class="inspection-order-grid compact-three">
+    const typeMeta = getInspectionTypeMeta(order.inspectionType);
+    const isOnsite = order.inspectionType === '现场抽检';
+    const gridClass = isOnsite ? 'compact-two' : 'compact-three';
+    const metrics = isOnsite
+        ? `
                 <div class="metric-chip">
-                    <span class="metric-label">MES工单号</span>
+                    <span class="metric-label">关联订单号</span>
                     <span class="metric-value">${order.mesOrderNo}</span>
                 </div>
                 <div class="metric-chip">
-                    <span class="metric-label">物料编码</span>
-                    <span class="metric-value">${order.materialCode}</span>
+                    <span class="metric-label">关联托盘数</span>
+                    <span class="metric-value">${order.relatedPalletCount}</span>
+                </div>
+          `
+        : `
+                <div class="metric-chip">
+                    <span class="metric-label">关联订单号</span>
+                    <span class="metric-value">${order.mesOrderNo}</span>
                 </div>
                 <div class="metric-chip">
                     <span class="metric-label">抽检托数</span>
@@ -67,6 +68,20 @@ function renderInspectionOrderCard(order) {
                     <span class="metric-label">目标检验室</span>
                     <span class="metric-value">${order.targetLab}</span>
                 </div>
+          `;
+
+    return `
+        <div class="inspection-order-card ${statusMeta.cardClass} ${typeMeta.cardClass}">
+            <span class="inspection-type-pill ${typeMeta.pillClass}">${typeMeta.label}</span>
+            <div class="inspection-order-head">
+                <div>
+                    <div class="inspection-order-no">${order.orderNo}</div>
+                    <div class="inspection-order-sub">${order.materialCode}-${order.materialName}</div>
+                </div>
+                <span class="inspection-status-badge ${statusMeta.badgeClass}">${order.status}</span>
+            </div>
+            <div class="inspection-order-grid ${gridClass}">
+                ${metrics}
             </div>
             <div class="inspection-order-actions">
                 ${renderInspectionOrderAction(order)}
@@ -80,19 +95,14 @@ function renderInspectionOrderAction(order) {
         return `<button class="compact-btn primary" data-action="inspect" data-order-no="${order.orderNo}">执行抽检</button>`;
     }
 
-    if (order.status === '待确认回库') {
-        return `<button class="compact-btn primary" data-action="return" data-order-no="${order.orderNo}">回库确认</button>`;
-    }
-
     return `<button class="compact-btn ghost" data-action="view" data-order-no="${order.orderNo}">查看详情</button>`;
 }
 
 function sortInspectionOrders(orders) {
     const priority = {
         '检验中': 1,
-        '待确认回库': 2,
-        '待检验': 3,
-        '已确认回库': 4
+        '待检验': 2,
+        '已完成': 3
     };
 
     return orders.slice().sort(function(a, b) {
@@ -112,14 +122,7 @@ function getInspectionStatusMeta(status) {
         };
     }
 
-    if (status === '待确认回库') {
-        return {
-            badgeClass: 'status-return',
-            cardClass: 'is-returning'
-        };
-    }
-
-    if (status === '已确认回库') {
+    if (status === '已完成') {
         return {
             badgeClass: 'status-complete',
             cardClass: 'is-completed'
@@ -129,5 +132,21 @@ function getInspectionStatusMeta(status) {
     return {
         badgeClass: 'status-pending',
         cardClass: ''
+    };
+}
+
+function getInspectionTypeMeta(type) {
+    if (type === '现场抽检') {
+        return {
+            label: '现场抽检',
+            pillClass: 'is-onsite',
+            cardClass: 'type-onsite'
+        };
+    }
+
+    return {
+        label: '检验室抽检',
+        pillClass: 'is-lab',
+        cardClass: 'type-lab'
     };
 }

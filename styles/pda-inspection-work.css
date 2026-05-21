@@ -32,6 +32,15 @@
     background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
 }
 
+.inspection-order-card.type-lab {
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
+}
+
+.inspection-order-card.type-onsite {
+    border-color: rgba(249, 115, 22, 0.26);
+    box-shadow: 0 10px 22px rgba(249, 115, 22, 0.12);
+}
+
 .inspection-order-head,
 .pallet-panel-head {
     display: flex;
@@ -39,6 +48,10 @@
     justify-content: space-between;
     gap: 12px;
     padding-right: 84px;
+}
+
+.inspection-order-card .inspection-order-head {
+    margin-top: 30px;
 }
 
 .inspection-order-no,
@@ -55,6 +68,51 @@
     font-size: 13px;
     color: #475569;
     word-break: break-all;
+}
+
+.inspection-type-pill {
+    position: absolute;
+    top: 12px;
+    left: -1px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 0 18px 0 14px;
+    border-radius: 0;
+    border: none;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.inspection-type-pill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 10px;
+    height: 100%;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.inspection-type-pill.is-lab {
+    background: #e8f0ff;
+    color: #1d4ed8;
+}
+
+.inspection-type-pill.is-lab::after {
+    background: #e8f0ff;
+}
+
+.inspection-type-pill.is-onsite {
+    background: #fff1e3;
+    color: #c2410c;
+}
+
+.inspection-type-pill.is-onsite::after {
+    background: #fff1e3;
 }
 
 .inspection-status-badge,
@@ -101,6 +159,10 @@
 
 .inspection-order-grid.compact-three {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.inspection-order-grid.compact-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .metric-chip,
@@ -245,6 +307,10 @@
     background: #f1f5f9;
 }
 
+.related-pallet-card {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
 .empty-state-card {
     padding: 18px 12px;
     border-radius: 12px;
@@ -264,6 +330,7 @@
 
 @media (max-width: 420px) {
     .inspection-order-grid,
+    .inspection-order-grid.compact-two,
     .inspection-order-grid.compact-three,
     .summary-grid {
         grid-template-columns: 1fr;

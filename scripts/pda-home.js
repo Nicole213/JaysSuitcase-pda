@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     bindPackagingEntryReset();
     bindInspectionEntryReset();
+    bindInspectionReturnEntryReset();
 });
 
 function updateTime() {
@@ -47,5 +48,17 @@ function bindInspectionEntryReset() {
 
     inspectionEntry.addEventListener('click', function() {
         window.InspectionWorkStorage.resetAll();
+    });
+}
+
+function bindInspectionReturnEntryReset() {
+    const inspectionReturnEntry = document.querySelector('a[href="pages/抽检回库.html"]');
+    if (!inspectionReturnEntry) {
+        return;
+    }
+
+    inspectionReturnEntry.addEventListener('click', function() {
+        localStorage.removeItem('pdaInspectionReturnDemoState');
+        localStorage.removeItem('pdaInspectionReturnDemoStateVersion');
     });
 }

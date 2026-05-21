@@ -55,6 +55,43 @@
     white-space: nowrap;
 }
 
+.inspection-order-info-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.inspection-order-info-card .card-title {
+    padding-right: 120px;
+}
+
+.inspection-page-type-badge {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.inspection-page-type-badge.is-lab {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: rgba(59, 130, 246, 0.22);
+    color: #1d4ed8;
+}
+
+.inspection-page-type-badge.is-onsite {
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+    border-color: rgba(249, 115, 22, 0.24);
+    color: #c2410c;
+}
+
 #scanPalletCard .scan-input {
     padding: 12px 10px;
     font-size: 14px;

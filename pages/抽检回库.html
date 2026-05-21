@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>抽检回库 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-finished-inspection.css">
+    <link rel="stylesheet" href="../styles/pda-inspection-inbound.css">
+    <link rel="stylesheet" href="../styles/pda-inspection-return.css">
+</head>
+<body>
+    <div class="pda-container inspection-return-page">
+        <div class="pda-header">
+            <button class="back-btn" type="button" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>抽检回库</h1>
+        </div>
+
+        <div class="scan-card highlight-card reference-scan-card landmark-scan-card">
+            <div class="card-title card-title-inline reference-card-title">
+                <span>扫描地标码</span>
+            </div>
+            <div class="scan-input-group compact-gap reference-scan-group landmark-scan-group">
+                <input type="text" class="scan-input landmark-input reference-scan-input reference-landmark-input" id="landmarkCodeInput" placeholder="请输入地标码，如 DB-A01-01" autocomplete="off" autofocus>
+            </div>
+            <div class="help-text reference-help-text" id="landmarkHint">可试用地标码：-</div>
+        </div>
+
+        <div class="scan-card reference-scan-card pallet-scan-card">
+            <div class="card-title reference-card-title">扫描托盘码</div>
+            <div class="scan-input-group compact-gap reference-scan-group">
+                <input type="text" class="scan-input reference-scan-input reference-pallet-input" id="palletCodeInput" placeholder="请输入当前抽检单下托盘码" autocomplete="off" disabled>
+            </div>
+            <div class="help-text reference-help-text" id="palletHint">请先输入地标码，系统将自动回显托盘码</div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">当前托盘信息</div>
+            <div class="summary-banner inbound-summary-banner return-summary-banner is-empty" id="palletSummary">
+                <div>
+                    <div class="summary-pallet-code" id="summaryPalletCode">待识别托盘</div>
+                    <div class="summary-pallet-meta" id="summaryPalletMeta">扫描地标码后自动带出托盘与物料信息</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">SN信息</div>
+            <div class="compact-info-list return-result-list">
+                <div class="overview-link-row inbound-link-row return-overview-row" data-detail-type="bound">
+                    <span class="overview-label">当前绑定SN</span>
+                    <span class="clickable-group">
+                        <span class="clickable-value" id="boundCount">0</span>
+                        <span class="clickable-arrow">›</span>
+                    </span>
+                </div>
+                <div class="overview-link-row inbound-link-row return-overview-row" data-detail-type="unbound">
+                    <span class="overview-label">已解绑 SN</span>
+                    <span class="clickable-group">
+                        <span class="clickable-value" id="unboundCount">0</span>
+                        <span class="clickable-arrow">›</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scan-card return-sn-scan-card">
+            <div class="scan-input-group return-sn-scan-group">
+                <input type="text" class="scan-input" id="snCodeInput" placeholder="请输入当前托盘内 SN 码" autocomplete="off" disabled>
+            </div>
+            <div class="help-text scan-demo-hint" id="snHint">请先识别托盘后再输入 SN 码</div>
+            <button class="secondary-btn danger-soft-btn full-width" id="unbindSnBtn" type="button" disabled>解绑</button>
+        </div>
+
+        <div class="return-action-bar">
+            <button class="primary-btn return-confirm-btn" id="confirmInboundBtn" type="button" disabled>确认入库</button>
+        </div>
+    </div>
+
+    <div class="modal" id="unbindConfirmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认解绑</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>SN码：</label>
+                    <span id="modalUnbindSnCode">-</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmUnbindBtn" type="button">确认解绑</button>
+                <button class="modal-btn secondary" id="cancelUnbindBtn" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmInboundModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认入库</h3>
+            </div>
+            <div class="modal-body">
+                <div class="modal-copy-panel">确认后将按当前地标码完成本托盘的抽检回库。</div>
+                <div class="info-row">
+                    <label>地标码：</label>
+                    <span id="modalInboundLandmarkCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>托盘码：</label>
+                    <span id="modalInboundPalletCode">-</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmInboundModalBtn" type="button">确认入库</button>
+                <button class="modal-btn secondary" id="cancelInboundBtn" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-inspection-return.js"></script>
+</body>
+</html>

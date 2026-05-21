@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>关联托盘信息 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-inspection-work.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="goBackToInspectionExecution()">← 返回</button>
+            <h1>关联托盘信息</h1>
+            <div class="port-badge" id="relatedPalletBadge">-</div>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">关联托盘列表</div>
+            <div class="pallet-panel-list" id="relatedPalletList"></div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-inspection-work-data.js"></script>
+    <script src="../scripts/pda-related-pallets.js"></script>
+</body>
+</html>

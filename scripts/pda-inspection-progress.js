@@ -95,14 +95,7 @@ function getPalletStatusMeta(status) {
         };
     }
 
-    if (status === '待确认回库') {
-        return {
-            badgeClass: 'status-return',
-            cardClass: 'is-returning'
-        };
-    }
-
-    if (status === '已确认回库') {
+    if (status === '已完成') {
         return {
             badgeClass: 'status-complete',
             cardClass: 'is-completed'

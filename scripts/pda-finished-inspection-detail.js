@@ -135,12 +135,21 @@ function goBackToInspection() {
     const orderNo = params.get('orderNo') || '';
     const palletCode = params.get('palletCode') || '';
     const source = params.get('source') || '';
+    const returnSource = params.get('returnSource') || '';
 
     if (source === 'progress') {
         const progressTarget = orderNo
             ? `抽检进度.html?orderNo=${encodeURIComponent(orderNo)}`
             : '抽检作业.html';
         window.location.href = progressTarget;
+        return;
+    }
+
+    if (source === 'inspected') {
+        const inspectedTarget = orderNo
+            ? `已抽检托盘.html?orderNo=${encodeURIComponent(orderNo)}${returnSource ? `&source=${encodeURIComponent(returnSource)}` : ''}`
+            : '抽检作业.html';
+        window.location.href = inspectedTarget;
         return;
     }
 
