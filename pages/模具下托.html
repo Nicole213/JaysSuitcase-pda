@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>模具解绑 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-mold-unpallet.css">
+</head>
+<body>
+    <div class="pda-container mold-unpallet-page">
+        <div class="pda-header">
+            <button class="back-btn" type="button" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>模具解绑</h1>
+        </div>
+
+        <div class="scan-card mold-unpallet-card highlight-card">
+            <div class="card-title">扫描托盘码</div>
+            <div class="scan-input-group mold-unpallet-input-group">
+                <input type="text" class="scan-input mold-unpallet-input" id="palletCodeInput" placeholder="请输入/扫描托盘码" autocomplete="off" autofocus>
+            </div>
+            <div class="help-text" id="palletHint">可试用托盘码：-</div>
+        </div>
+
+        <div class="info-card mold-unpallet-card">
+            <div class="card-title-with-action">
+                <span>托盘内模具</span>
+                <span class="count-pill" id="selectedMoldCount">0</span>
+            </div>
+            <div class="mold-unpallet-list" id="moldList"></div>
+        </div>
+
+        <div class="mold-unpallet-action-bar">
+            <button class="primary-btn mold-unpallet-submit-btn" id="submitBtn" type="button" disabled>提交</button>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmSubmitModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认提交</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>托盘码：</label>
+                    <span id="confirmPalletCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>解绑数量：</label>
+                    <span id="confirmMoldCount">0</span>
+                </div>
+                <div class="modal-list-title">本次解绑模具</div>
+                <div class="modal-mold-list" id="confirmMoldList"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmSubmitBtn" type="button">确认提交</button>
+                <button class="modal-btn secondary" id="cancelSubmitBtn" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-mold-unpallet.js"></script>
+</body>
+</html>

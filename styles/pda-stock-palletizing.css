@@ -1,0 +1,25 @@
+.scan-input:disabled {
+    background: #f8fafc;
+    color: #94a3b8;
+    border-color: #e2e8f0;
+}
+
+.scan-demo-hint {
+    margin-top: 2px;
+    color: #94a3b8;
+}
+
+.material-info-card .info-row label {
+    min-width: 88px;
+}
+
+.material-info-value {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.primary-btn:disabled {
+    background: #cbd5e1;
+    color: #ffffff;
+    cursor: not-allowed;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>模具出库 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-mold-outbound.css">
+</head>
+<body>
+    <div class="pda-container mold-outbound-page">
+        <div class="pda-header">
+            <button class="back-btn" type="button" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>模具出库</h1>
+        </div>
+
+        <div class="scan-card mold-outbound-card highlight-card">
+            <div class="card-title">模具编号</div>
+            <div class="scan-input-group mold-outbound-input-group">
+                <input type="text" class="scan-input mold-outbound-input" id="moldCodeInput" placeholder="请输入模具编号" autocomplete="off" autofocus>
+            </div>
+            <div class="help-text" id="moldCodeHint">可试用模具编号：-</div>
+        </div>
+
+        <div class="info-card mold-outbound-card">
+            <div class="card-title">托盘信息</div>
+            <div class="pallet-brief-row">
+                <span class="pallet-brief-label">托盘码</span>
+                <span class="pallet-brief-value" id="palletCodeText">-</span>
+            </div>
+        </div>
+
+        <div class="info-card mold-outbound-card">
+            <div class="card-title-with-action">
+                <span>托盘内模具</span>
+                <span class="count-pill" id="selectedMoldCount">0</span>
+            </div>
+            <div class="mold-outbound-list" id="moldList"></div>
+        </div>
+
+        <div class="info-card mold-outbound-card">
+            <div class="card-title">选择目的区域</div>
+            <div class="region-option-grid outbound-region-grid" id="regionOptionGrid">
+                <button class="region-option-btn" type="button" data-region="区域1">区域1</button>
+                <button class="region-option-btn" type="button" data-region="区域2">区域2</button>
+                <button class="region-option-btn" type="button" data-region="区域3">区域3</button>
+            </div>
+        </div>
+
+        <div class="mold-outbound-action-bar">
+            <button class="primary-btn mold-outbound-confirm-btn" id="confirmOutboundBtn" type="button" disabled>确认出库</button>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmOutboundModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认出库</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>申请模具：</label>
+                    <span id="confirmRequestMoldCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>托盘码：</label>
+                    <span id="confirmPalletCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>出库数量：</label>
+                    <span id="confirmMoldCount">0</span>
+                </div>
+                <div class="info-row">
+                    <label>目的区域：</label>
+                    <span id="confirmRegionText">-</span>
+                </div>
+                <div class="modal-list-title">本次出库模具</div>
+                <div class="modal-mold-list" id="confirmMoldList"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmOutboundSubmitBtn" type="button">确认</button>
+                <button class="modal-btn secondary" id="cancelOutboundSubmitBtn" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-mold-outbound.js"></script>
+</body>
+</html>

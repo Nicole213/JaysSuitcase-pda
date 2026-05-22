@@ -40,12 +40,20 @@
     --section-accent: #2563eb;
 }
 
+.mold-section {
+    --section-accent: #7c3aed;
+}
+
 .inventory-section {
     --section-accent: #0f766e;
 }
 
 .dispatch-section {
     --section-accent: #b45309;
+}
+
+.special-section {
+    --section-accent: #be185d;
 }
 
 .section-header {
@@ -112,6 +120,72 @@
 }
 
 .location-clear-menu-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.empty-pallet-menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty-pallet-menu-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.mold-pallet-menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mold-pallet-menu-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.mold-palletizing-menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mold-palletizing-menu-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.mold-outbound-menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mold-outbound-menu-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.mold-unpallet-menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mold-unpallet-menu-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.mold-pallet-return-menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mold-pallet-return-menu-icon svg {
     width: 34px;
     height: 34px;
 }

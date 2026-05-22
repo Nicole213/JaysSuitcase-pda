@@ -90,7 +90,7 @@ function bindExecutionEvents() {
         document.getElementById('remainingSnList').innerHTML = '';
         document.getElementById('continueSupplyCheckbox').checked = false;
         document.getElementById('continueSupplyGroup').style.display = 'none';
-        document.getElementById('continueSupplyType').value = scenario.supplyType;
+        setContinueSupplyType(scenario.supplyType);
         renderPalletReturnScenario(scenario);
         showModal('palletReturnModal');
         setTimeout(() => {
@@ -100,6 +100,12 @@ function bindExecutionEvents() {
 
     document.getElementById('continueSupplyCheckbox').addEventListener('change', function(event) {
         document.getElementById('continueSupplyGroup').style.display = event.target.checked ? 'block' : 'none';
+    });
+
+    document.querySelectorAll('.supply-type-option-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            setContinueSupplyType(button.dataset.supplyType || '待包装成品');
+        });
     });
 
     document.getElementById('confirmPalletReturnBtn').addEventListener('click', function() {
@@ -345,6 +351,15 @@ function renderPalletReturnScenario(scenario) {
     document.getElementById('remainingQtyGroup').style.display = 'none';
     document.getElementById('remainingSnGroup').style.display = 'block';
     document.getElementById('remainingSnList').innerHTML = buildRemainingSnTable(scenario.remainingSnList);
+}
+
+function setContinueSupplyType(type) {
+    const nextType = type === '包装纸箱' ? '包装纸箱' : '待包装成品';
+    document.getElementById('continueSupplyType').value = nextType;
+
+    document.querySelectorAll('.supply-type-option-btn').forEach(function(button) {
+        button.classList.toggle('is-selected', button.dataset.supplyType === nextType);
+    });
 }
 
 function getScenarioRemainingQty(scenario) {

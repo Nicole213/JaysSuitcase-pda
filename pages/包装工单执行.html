@@ -136,10 +136,11 @@
                 </label>
                 <div class="form-group" id="continueSupplyGroup" style="display: none;">
                     <label>补给类型：</label>
-                    <select class="form-select" id="continueSupplyType">
-                        <option value="待包装成品">待包装成品</option>
-                        <option value="包装纸箱">包装纸箱</option>
-                    </select>
+                    <div class="supply-type-option-grid" id="continueSupplyTypeOptions">
+                        <button class="supply-type-option-btn" type="button" data-supply-type="待包装成品">待包装成品</button>
+                        <button class="supply-type-option-btn" type="button" data-supply-type="包装纸箱">包装纸箱</button>
+                    </div>
+                    <input type="hidden" id="continueSupplyType" value="待包装成品">
                 </div>
             </div>
             <div class="modal-footer">

@@ -125,7 +125,7 @@
             time: `${baseDate} 16:00:00`,
             kind: 'status',
             title: '开始发货',
-            detail: `已选择${order.linePort || '上线口 1'}与${order.dockName || '发货月台 1'}，托盘开始出库。`
+            detail: `已选择${order.linePort || '工位1'}与${order.dockName || '发货月台1'}，托盘开始出库。`
         });
 
         pallets.forEach((pallet, index) => {
@@ -245,15 +245,15 @@
                 plannedQty: 96,
                 shippedQty: 32,
                 currentPalletCode: '',
-                linePort: '上线口 1',
-                dockName: '发货月台 2',
+                linePort: '工位1',
+                dockName: '发货月台1',
                 lastActionAt: '2026/05/11 09:26:00',
                 history: [
                     {
                         time: '2026/05/11 09:00:00',
                         kind: 'status',
                         title: '开始发货',
-                        detail: '已选择上线口 1 与发货月台 2，托盘开始出库。'
+                        detail: '已选择工位1与发货月台1，托盘开始出库。'
                     },
                     {
                         time: '2026/05/11 09:12:00',
@@ -282,15 +282,15 @@
                 plannedQty: 80,
                 shippedQty: 48,
                 currentPalletCode: '',
-                linePort: '上线口 2',
-                dockName: '发货月台 1',
+                linePort: '工位3',
+                dockName: '发货月台2',
                 lastActionAt: '2026/05/11 10:02:00',
                 history: [
                     {
                         time: '2026/05/11 08:48:00',
                         kind: 'status',
                         title: '开始发货',
-                        detail: '已选择上线口 2 与发货月台 1，托盘开始出库。'
+                        detail: '已选择工位3与发货月台2，托盘开始出库。'
                     },
                     {
                         time: '2026/05/11 09:17:00',
@@ -338,8 +338,8 @@
                 plannedQty: 60,
                 shippedQty: 60,
                 currentPalletCode: '',
-                linePort: '上线口 1',
-                dockName: '发货月台 1',
+                linePort: '工位2',
+                dockName: '发货月台2',
                 lastActionAt: '2026/05/10 16:30:00',
                 completedAt: '2026/05/10 16:30:00',
                 history: [
@@ -347,7 +347,7 @@
                         time: '2026/05/10 16:00:00',
                         kind: 'status',
                         title: '开始发货',
-                        detail: '已选择上线口 1与发货月台 1，托盘开始出库。'
+                        detail: '已选择工位2与发货月台2，托盘开始出库。'
                     },
                     {
                         time: '2026/05/10 16:08:00',

@@ -1,0 +1,183 @@
+:root {
+    --mold-unpallet-primary: #2563eb;
+    --mold-unpallet-accent: #f59e0b;
+    --mold-unpallet-muted: #64748b;
+    --mold-unpallet-border: rgba(148, 163, 184, 0.22);
+    --mold-unpallet-soft-accent: #fff7ed;
+    --mold-unpallet-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.mold-unpallet-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.16), transparent 28%),
+        linear-gradient(180deg, #f8fafc 0%, #eef4ff 100%);
+    padding-bottom: 108px;
+}
+
+.mold-unpallet-card {
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.94);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 250, 251, 0.98) 100%);
+    box-shadow: var(--mold-unpallet-shadow);
+}
+
+.highlight-card {
+    border-color: rgba(37, 99, 235, 0.16);
+}
+
+.mold-unpallet-input-group {
+    margin-bottom: 0;
+}
+
+.mold-unpallet-input {
+    min-height: 48px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 2px solid #d9dee9;
+    color: #0f172a;
+    background: #ffffff;
+}
+
+.mold-unpallet-input:focus {
+    border-color: #5b7cff;
+    box-shadow: 0 0 0 3px rgba(91, 124, 255, 0.14);
+}
+
+.count-pill {
+    min-width: 40px;
+    height: 28px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--mold-unpallet-soft-accent);
+    color: #b45309;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.mold-unpallet-list {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mold-unpallet-list.is-idle::before {
+    content: "扫描托盘码后查看";
+    display: block;
+    padding: 14px 12px;
+    border-radius: 12px;
+    background: #f8fafc;
+    color: #94a3b8;
+    text-align: center;
+    font-size: 13px;
+}
+
+.mold-unpallet-list.is-empty::before {
+    content: "当前托盘暂无模具";
+    display: block;
+    padding: 14px 12px;
+    border-radius: 12px;
+    background: #f8fafc;
+    color: #94a3b8;
+    text-align: center;
+    font-size: 13px;
+}
+
+.mold-option-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--mold-unpallet-border);
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.mold-option-item.is-selected {
+    border-color: rgba(245, 158, 11, 0.28);
+    background: linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+}
+
+.mold-option-checkbox {
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    accent-color: #2563eb;
+    flex-shrink: 0;
+}
+
+.mold-option-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.mold-option-code {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    word-break: break-all;
+}
+
+.mold-option-model {
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--mold-unpallet-muted);
+    word-break: break-word;
+}
+
+.mold-unpallet-action-bar {
+    position: sticky;
+    bottom: 0;
+    padding: 14px 16px 20px;
+    background: linear-gradient(180deg, rgba(238, 244, 255, 0) 0%, rgba(238, 244, 255, 0.92) 24%, rgba(238, 244, 255, 0.98) 100%);
+    backdrop-filter: blur(10px);
+}
+
+.mold-unpallet-submit-btn {
+    min-height: 52px;
+    border-radius: 14px;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+}
+
+.modal-list-title {
+    margin-top: 12px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.modal-mold-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.modal-mold-chip {
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #0f172a;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.modal-mold-chip.is-empty {
+    text-align: center;
+    color: #94a3b8;
+}
+
+.primary-btn:disabled {
+    background: #cbd5e1;
+    color: #ffffff;
+    cursor: not-allowed;
+}

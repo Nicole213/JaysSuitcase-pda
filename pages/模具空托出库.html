@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>模具空托出库 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-mold-empty-pallet.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>模具空托出库</h1>
+        </div>
+
+        <div class="info-card">
+            <div class="card-title">选择目的区域</div>
+            <div class="region-option-grid" id="regionOptionGrid">
+                <button class="region-option-btn" type="button" data-region="区域1">区域1</button>
+                <button class="region-option-btn" type="button" data-region="区域2">区域2</button>
+                <button class="region-option-btn" type="button" data-region="区域3">区域3</button>
+            </div>
+            <div class="fixed-qty-row">
+                <span class="fixed-qty-label">出库数量：</span>
+                <span class="fixed-qty-value">1个空托</span>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button class="primary-btn" id="confirmMoldOutboundBtn" disabled>确认出库</button>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmMoldOutboundModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认出库</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>目的区域：</label>
+                    <span id="confirmRegionText">-</span>
+                </div>
+                <div class="info-row">
+                    <label>出库数量：</label>
+                    <span>1个空托</span>
+                </div>
+                <div class="mold-outbound-confirm-copy">确认呼叫模具空托出库至该区域吗？</div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmMoldOutboundSubmitBtn">确认</button>
+                <button class="modal-btn secondary" id="cancelMoldOutboundSubmitBtn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-mold-empty-pallet.js"></script>
+</body>
+</html>

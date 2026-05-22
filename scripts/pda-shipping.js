@@ -10,6 +10,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function bindEvents() {
+    document.querySelectorAll('.shipping-option-btn[data-workstation]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            setShippingWorkstation(button.dataset.workstation || '');
+        });
+    });
+
+    document.querySelectorAll('.shipping-option-btn[data-dock]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            setShippingDock(button.dataset.dock || '');
+        });
+    });
+
     document.getElementById('shippingOrderList').addEventListener('click', function(event) {
         const target = event.target.closest('button[data-action]');
         if (!target) {
@@ -54,7 +66,7 @@ function bindEvents() {
         const dockName = document.getElementById('dockSelect').value;
 
         if (!linePort) {
-            alert('请选择上线口。');
+            alert('请选择工位。');
             return;
         }
 
@@ -178,9 +190,27 @@ function openStartModal(orderNo, action) {
     document.getElementById('startCustomerName').textContent = order.customerName;
     document.getElementById('startShippingModalTitle').textContent = currentStartAction === 'continue' ? '继续发货' : '开始发货';
     document.getElementById('confirmStartShippingBtn').textContent = currentStartAction === 'continue' ? '确认继续' : '确认开始';
-    document.getElementById('linePortSelect').value = order.linePort || '';
-    document.getElementById('dockSelect').value = order.dockName || '';
+    setShippingWorkstation(order.linePort || '');
+    setShippingDock(order.dockName || '');
     showModal('startShippingModal');
+}
+
+function setShippingWorkstation(workstation) {
+    const nextWorkstation = ['工位1', '工位2', '工位3', '工位4', '工位5'].includes(workstation) ? workstation : '';
+    document.getElementById('linePortSelect').value = nextWorkstation;
+
+    document.querySelectorAll('.shipping-option-btn[data-workstation]').forEach(function(button) {
+        button.classList.toggle('is-selected', button.dataset.workstation === nextWorkstation);
+    });
+}
+
+function setShippingDock(dockName) {
+    const nextDock = ['发货月台1', '发货月台2'].includes(dockName) ? dockName : '';
+    document.getElementById('dockSelect').value = nextDock;
+
+    document.querySelectorAll('.shipping-option-btn[data-dock]').forEach(function(button) {
+        button.classList.toggle('is-selected', button.dataset.dock === nextDock);
+    });
 }
 
 function openCancelModal(orderNo) {

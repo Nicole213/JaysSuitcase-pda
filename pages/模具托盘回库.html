@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>模具托盘回库 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-mold-pallet-return.css">
+</head>
+<body>
+    <div class="pda-container mold-pallet-return-page">
+        <div class="pda-header">
+            <button class="back-btn" type="button" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>模具托盘回库</h1>
+        </div>
+
+        <div class="scan-card mold-pallet-return-card highlight-card">
+            <div class="card-title">扫描地标码</div>
+            <div class="scan-input-group mold-pallet-return-input-group">
+                <input type="text" class="scan-input mold-pallet-return-input" id="landmarkCodeInput" placeholder="请输入/扫描地标码" autocomplete="off" autofocus>
+            </div>
+            <div class="help-text mold-pallet-return-hint" id="landmarkHint">可试用地标码：-</div>
+        </div>
+
+        <div class="mold-pallet-return-action-bar">
+            <button class="primary-btn mold-pallet-return-confirm-btn" id="confirmInboundBtn" type="button" disabled>确认入库</button>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmInboundModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认入库</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>地标码：</label>
+                    <span id="confirmLandmarkCode">-</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmInboundSubmitBtn" type="button">确认入库</button>
+                <button class="modal-btn secondary" id="cancelInboundSubmitBtn" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-mold-pallet-return.js"></script>
+</body>
+</html>

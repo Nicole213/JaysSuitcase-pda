@@ -38,39 +38,6 @@ function bindEvents() {
         alert('发货单已继续执行。');
     });
 
-    document.getElementById('scanPalletBtn').addEventListener('click', function() {
-        const palletCode = document.getElementById('emptyPalletCodeInput').value.trim();
-        if (!palletCode) {
-            alert('请先扫描到位托盘码。');
-            return;
-        }
-
-        const result = ShippingStorage.scanPallet(currentOrderNo, palletCode);
-        if (!result.ok) {
-            if (result.reason === 'not_in_order') {
-                alert('该托盘不在当前发货单内。');
-                return;
-            }
-
-            if (result.reason === 'already_unbound') {
-                alert('该托盘已解绑完成，请扫描下一个托盘。');
-                return;
-            }
-
-            alert('当前托盘无法识别，请检查发货状态。');
-            return;
-        }
-
-        document.getElementById('emptyPalletCodeInput').value = '';
-        renderExecutionPage();
-        alert(`托盘 ${result.pallet.palletCode} 识别成功，请核对信息后执行解绑。`);
-    });
-
-    document.getElementById('clearPalletCodeBtn').addEventListener('click', function() {
-        document.getElementById('emptyPalletCodeInput').value = '';
-        document.getElementById('emptyPalletCodeInput').focus();
-    });
-
     document.getElementById('manualCompleteBtn').addEventListener('click', function() {
         const order = ShippingStorage.getOrder(currentOrderNo);
         if (!order || (order.status !== 'in_progress' && order.status !== 'paused')) {
@@ -119,10 +86,6 @@ function renderExecutionPage() {
     }
 
     const progress = order.plannedQty === 0 ? 0 : Math.round((order.shippedQty / order.plannedQty) * 100);
-    const currentPallet = ShippingStorage.getScannedPallet(order);
-    const pendingPalletCodes = (order.pallets || [])
-        .filter(item => item.status !== 'unbound')
-        .map(item => item.palletCode);
 
     document.getElementById('orderNo').textContent = order.orderNo;
     document.getElementById('customerName').textContent = order.customerName;
@@ -134,88 +97,23 @@ function renderExecutionPage() {
     document.getElementById('progressFill').style.width = `${progress}%`;
     document.getElementById('progressStatusText').textContent = getProgressText(order.status, progress);
     document.getElementById('shippingStatusBadge').textContent = getBadgeText(order.status);
-    document.getElementById('scanPalletHints').textContent = pendingPalletCodes.length
-        ? `当前发货单可测试托盘码：${pendingPalletCodes.join('、')}`
-        : '当前发货单无可扫描托盘码。';
-
-    renderCurrentPalletPanel(order, currentPallet);
     renderHistory(order.history || []);
-    syncActionState(order, currentPallet);
-}
-
-function renderCurrentPalletPanel(order, pallet) {
-    if (!pallet) {
-        document.getElementById('currentPalletPanel').innerHTML = `
-            <div class="empty-state-card">
-                <div class="empty-state-title">等待扫描到位托盘</div>
-            </div>
-        `;
-        return;
-    }
-
-    document.getElementById('currentPalletPanel').innerHTML = `
-        <div class="pallet-card">
-            <div class="pallet-card-head">
-                <div>
-                    <div class="pallet-code">${pallet.palletCode}</div>
-                    <div class="pallet-material">${pallet.materialName} · ${pallet.materialCode}</div>
-                </div>
-                <span class="status-badge shipping-progress">待解绑</span>
-            </div>
-            <div class="pallet-info-list">
-                <div class="info-row">
-                    <label>托盘编码：</label>
-                    <span>${pallet.palletCode}</span>
-                </div>
-                <div class="info-row">
-                    <label>物料编码：</label>
-                    <span>${pallet.materialCode}</span>
-                </div>
-                <div class="info-row">
-                    <label>物料名称：</label>
-                    <span>${pallet.materialName}</span>
-                </div>
-                <div class="info-row">
-                    <label>物料数量：</label>
-                    <span>${pallet.boxQty}</span>
-                </div>
-            </div>
-            <div class="help-text pallet-help-text">请确认该托盘已完成拆膜，托盘内物料已逐箱下线后，再执行解绑。</div>
-            <div class="pallet-actions">
-                <button class="small-btn primary shipping-start-btn" id="confirmUnbindBtn" ${order.status !== 'in_progress' ? 'disabled' : ''}>确认解绑</button>
-            </div>
-        </div>
-    `;
-
-    const confirmUnbindBtn = document.getElementById('confirmUnbindBtn');
-    if (confirmUnbindBtn) {
-        confirmUnbindBtn.addEventListener('click', function() {
-            const result = ShippingStorage.unbindScannedPallet(currentOrderNo);
-            if (!result.ok) {
-                alert('当前托盘无法解绑，请先扫描正确的托盘。');
-                return;
-            }
-
-            renderExecutionPage();
-            document.getElementById('emptyPalletCodeInput').focus();
-
-            if (result.completed) {
-                alert(`托盘解绑成功，已自动累加 ${result.shippedQty} 箱，发货单已完成。`);
-                return;
-            }
-
-            alert(`托盘解绑成功，已自动累加 ${result.shippedQty} 箱，请继续扫描下一个托盘。`);
-        });
-    }
+    syncActionState(order);
 }
 
 function renderHistory(history) {
-    if (!history.length) {
-        document.getElementById('historyTimeline').innerHTML = '<div class="history-empty">暂无操作记录，开始发货后将展示详细执行过程。</div>';
+    const visibleHistory = (history || []).filter(function(item) {
+        return item
+            && item.kind === 'status'
+            && ['开始发货', '暂停发货', '发货完成'].includes(item.title);
+    });
+
+    if (!visibleHistory.length) {
+        document.getElementById('historyTimeline').innerHTML = '<div class="history-empty">暂无关键节点记录。</div>';
         return;
     }
 
-    const html = history.slice().reverse().map(item => `
+    const html = visibleHistory.slice().reverse().map(item => `
         <div class="history-item">
             <div class="history-dot ${item.kind}"></div>
             <div class="history-content">
@@ -231,7 +129,7 @@ function renderHistory(history) {
     document.getElementById('historyTimeline').innerHTML = html;
 }
 
-function syncActionState(order, currentPallet) {
+function syncActionState(order) {
     const isRunning = order.status === 'in_progress';
     const isPaused = order.status === 'paused';
     const isCompleted = order.status === 'completed';
@@ -241,9 +139,6 @@ function syncActionState(order, currentPallet) {
     document.getElementById('pauseShippingBtn').style.display = isRunning ? 'block' : 'none';
     document.getElementById('continueShippingBtn').style.display = isPaused ? 'block' : 'none';
     document.getElementById('manualCompleteBtn').style.display = canManualComplete ? 'block' : 'none';
-    document.getElementById('scanPalletBtn').disabled = !isRunning;
-    document.getElementById('emptyPalletCodeInput').disabled = !isRunning;
-    document.getElementById('scanPalletCard').style.display = isCompleted || isCancelled ? 'none' : 'block';
 }
 
 function getProgressText(status, progress) {

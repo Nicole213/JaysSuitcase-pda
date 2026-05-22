@@ -1,0 +1,63 @@
+.region-option-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.region-option-btn {
+    border: 2px solid #dbe4f0;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 12px;
+    padding: 16px 14px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #334155;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.region-option-btn.is-selected {
+    border-color: #2563eb;
+    background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+    color: #1d4ed8;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.14);
+}
+
+.region-option-btn:active {
+    transform: translateY(1px);
+}
+
+.fixed-qty-row {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.fixed-qty-label {
+    color: #64748b;
+}
+
+.fixed-qty-value {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.primary-btn:disabled {
+    background: #cbd5e1;
+    color: #ffffff;
+    cursor: not-allowed;
+}
+
+.mold-outbound-confirm-copy {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #334155;
+    text-align: center;
+}

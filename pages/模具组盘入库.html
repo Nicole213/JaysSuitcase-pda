@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>模具组盘入库 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-mold-palletizing-inbound.css">
+</head>
+<body>
+    <div class="pda-container mold-palletizing-page">
+        <div class="pda-header">
+            <button class="back-btn" type="button" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>模具组盘入库</h1>
+        </div>
+
+        <div class="scan-card mold-scan-card highlight-card">
+            <div class="card-title">扫描地标码</div>
+            <div class="scan-input-group mold-scan-group">
+                <input type="text" class="scan-input mold-scan-input" id="landmarkCodeInput" placeholder="请输入地标码，如 DB-MD-01" autocomplete="off" autofocus>
+            </div>
+            <div class="help-text mold-help-text" id="landmarkHint">可试用地标码：-</div>
+        </div>
+
+        <div class="scan-card mold-scan-card">
+            <div class="card-title">扫描托盘码</div>
+            <div class="scan-input-group mold-scan-group">
+                <input type="text" class="scan-input mold-scan-input" id="palletCodeInput" placeholder="请输入或重新扫描托盘码" autocomplete="off" disabled>
+            </div>
+            <div class="help-text mold-help-text" id="palletHint">请先扫描地标码</div>
+        </div>
+
+        <div class="info-card mold-info-card">
+            <div class="card-title-with-action">
+                <span>当前托盘内模具</span>
+                <span class="count-pill" id="currentMoldCount">0</span>
+            </div>
+            <div class="pallet-summary-shell" id="palletSummary">
+                <div class="pallet-summary-code" id="summaryPalletCode">待识别托盘</div>
+                <div class="pallet-summary-meta" id="summaryPalletMeta">扫描地标码和托盘码后查看当前托盘内模具</div>
+            </div>
+            <div class="mold-list" id="currentMoldList"></div>
+        </div>
+
+        <div class="scan-card mold-scan-card">
+            <div class="card-title-with-action">
+                <span>本次新增模具</span>
+                <span class="count-pill is-accent" id="pendingMoldCount">0</span>
+            </div>
+            <div class="scan-input-group mold-scan-group mold-add-group">
+                <input type="text" class="scan-input mold-scan-input" id="moldCodeInput" placeholder="请输入模具编号" autocomplete="off" disabled>
+            </div>
+            <div class="help-text mold-help-text" id="moldHint">请先确认托盘码</div>
+            <div class="mold-list pending-mold-list" id="pendingMoldList"></div>
+        </div>
+
+        <div class="mold-palletizing-action-bar">
+            <button class="primary-btn mold-palletizing-confirm-btn" id="confirmInboundBtn" type="button" disabled>确认组盘入库</button>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmInboundModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认组盘入库</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>地标码：</label>
+                    <span id="confirmLandmarkCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>托盘码：</label>
+                    <span id="confirmPalletCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>当前已有：</label>
+                    <span id="confirmExistingCount">0</span>
+                </div>
+                <div class="info-row">
+                    <label>本次新增：</label>
+                    <span id="confirmPendingCount">0</span>
+                </div>
+                <div class="modal-list-title">本次新增模具编号</div>
+                <div class="modal-mold-list" id="confirmMoldList"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmInboundSubmitBtn" type="button">确认</button>
+                <button class="modal-btn secondary" id="cancelInboundSubmitBtn" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-mold-palletizing-inbound.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>存货组盘 - PDA</title>
+    <link rel="stylesheet" href="../styles/pda-common.css">
+    <link rel="stylesheet" href="../styles/pda-stock-palletizing.css">
+</head>
+<body>
+    <div class="pda-container">
+        <div class="pda-header">
+            <button class="back-btn" onclick="window.location.href='../index.html'">← 返回</button>
+            <h1>存货组盘</h1>
+        </div>
+
+        <div class="scan-card">
+            <div class="card-title">扫描托盘码</div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="palletCodeInput" placeholder="请扫描托盘码" autocomplete="off" autofocus>
+            </div>
+        </div>
+
+        <div class="scan-card">
+            <div class="card-title">扫描SN码</div>
+            <div class="scan-input-group">
+                <input type="text" class="scan-input" id="snCodeInput" placeholder="请扫描SN码" autocomplete="off" disabled>
+            </div>
+            <div class="help-text scan-demo-hint" id="demoSnHint">可试用SN码：-</div>
+        </div>
+
+        <div class="info-card material-info-card">
+            <div class="card-title">物料信息</div>
+            <div class="info-row">
+                <label>物料编码：</label>
+                <span id="materialCodeText" class="material-info-value">-</span>
+            </div>
+            <div class="info-row">
+                <label>物料名称：</label>
+                <span id="materialNameText" class="material-info-value">-</span>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button class="primary-btn" id="confirmPalletizingBtn" disabled>确认组盘</button>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmPalletizingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认组盘</h3>
+            </div>
+            <div class="modal-body">
+                <div class="info-row">
+                    <label>托盘码：</label>
+                    <span id="confirmPalletCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>SN码：</label>
+                    <span id="confirmSnCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>物料编码：</label>
+                    <span id="confirmMaterialCode">-</span>
+                </div>
+                <div class="info-row">
+                    <label>物料名称：</label>
+                    <span id="confirmMaterialName">-</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="confirmSubmitBtn">确认</button>
+                <button class="modal-btn secondary" id="cancelSubmitBtn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/pda-stock-palletizing.js"></script>
+</body>
+</html>
